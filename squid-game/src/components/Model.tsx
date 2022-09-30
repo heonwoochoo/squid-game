@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 
@@ -24,6 +24,10 @@ function Model(props: JSX.IntrinsicElements["group"]) {
     | GLTFResult
     | any;
   const { actions } = useAnimations<GLTFActions>(animations, group);
+  useEffect(() => {
+    actions.default?.stop();
+    actions.default?.play();
+  }, []);
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">

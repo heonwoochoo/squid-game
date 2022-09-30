@@ -1,5 +1,6 @@
 import { Canvas, Vector3 } from "@react-three/fiber";
 import React, { Suspense, useEffect, useRef } from "react";
+import { Physics } from "@react-three/cannon";
 import * as THREE from "three";
 import "./App.css";
 import CameraController from "./CameraController";
@@ -73,19 +74,23 @@ function App() {
           />
         ))}
         <Suspense fallback={null}>
-          <Floor />
-          <Pillar
-            position={[0, 5.5, -glassUnitSize * 12 - glassUnitSize / 2]}
-          />
-          <Pillar position={[0, 5.5, glassUnitSize * 12 + glassUnitSize / 2]} />
+          <Physics>
+            <Floor />
+            <Pillar
+              position={[0, 5.5, -glassUnitSize * 12 - glassUnitSize / 2]}
+            />
+            <Pillar
+              position={[0, 5.5, glassUnitSize * 12 + glassUnitSize / 2]}
+            />
 
-          {barPosition.map((position, i) => (
-            <Bar key={i} position={position} name={i.toString()} />
-          ))}
-          {glasses.map((glass, i) => (
-            <Glass key={i} position={glass.position} type={glass.type} />
-          ))}
-          <Model />
+            {barPosition.map((position, i) => (
+              <Bar key={i} position={position} name={i.toString()} />
+            ))}
+            {glasses.map((glass, i) => (
+              <Glass key={i} position={glass.position} type={glass.type} />
+            ))}
+            <Model />
+          </Physics>
         </Suspense>
       </Canvas>
     </div>
