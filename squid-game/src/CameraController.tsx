@@ -6,6 +6,8 @@ const CameraController = () => {
   useFrame((state, delta) => controls.update());
   const controls = new OrbitControls(camera, gl.domElement);
   controls.enableDamping = true;
+  controls.rotateSpeed = 0.1;
+  controls.zoomSpeed = 0.5;
   return null;
 };
 
