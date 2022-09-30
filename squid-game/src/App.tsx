@@ -1,5 +1,6 @@
 import { Canvas, Vector3 } from "@react-three/fiber";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useRef } from "react";
+import * as THREE from "three";
 import "./App.css";
 import CameraController from "./CameraController";
 import Setting from "./Setting";
@@ -7,6 +8,7 @@ import Floor from "./components/Floor";
 import Pillar from "./components/Pillar";
 import Bar from "./components/Bar";
 import Glass from "./components/Glass";
+import Model from "./components/Model";
 
 interface IGlass {
   step: number;
@@ -17,6 +19,13 @@ interface IGlass {
 function App() {
   const glassUnitSize = 1.2;
   const numberOfGlass = 10;
+  const spotLightDistance = 50;
+  const spotLightPosition: Vector3[] = [
+    [-spotLightDistance, spotLightDistance, spotLightDistance],
+    [spotLightDistance, spotLightDistance, spotLightDistance],
+    [-spotLightDistance, spotLightDistance, -spotLightDistance],
+    [spotLightDistance, spotLightDistance, -spotLightDistance],
+  ];
   const barPosition: Vector3[] = [
     [-1.6, 10.3, 0],
     [-0.4, 10.3, 0],
@@ -52,7 +61,17 @@ function App() {
       <Canvas id="canvas">
         <Setting />
         <CameraController />
-        <ambientLight color="white" intensity={0.7} />
+        <ambientLight color="#ffe9ac" intensity={0.7} />
+        {spotLightPosition.map((position, i) => (
+          <spotLight
+            intensity={1}
+            color="#ffe9ac"
+            position={position}
+            key={i}
+            castShadow
+            shadow-mapSize={[1024, 1024]}
+          />
+        ))}
         <Suspense fallback={null}>
           <Floor />
           <Pillar
@@ -66,6 +85,7 @@ function App() {
           {glasses.map((glass, i) => (
             <Glass key={i} position={glass.position} type={glass.type} />
           ))}
+          <Model />
         </Suspense>
       </Canvas>
     </div>

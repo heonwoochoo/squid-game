@@ -1,6 +1,7 @@
 import * as THREE from "three";
 function Glass(props: JSX.IntrinsicElements["mesh"]) {
   const type = props.type;
+  console.log("glass");
   return (
     <mesh {...props}>
       <boxGeometry args={[1.2, 0.05, 1.2]} />

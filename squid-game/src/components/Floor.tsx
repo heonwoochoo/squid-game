@@ -8,10 +8,11 @@ function Floor() {
   texture.repeat = new THREE.Vector2(4, 4);
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
+  console.log("Floor");
   return (
-    <mesh>
+    <mesh receiveShadow>
       <boxGeometry args={[200, 1, 200]} />
-      <meshPhongMaterial map={texture} />
+      <meshPhongMaterial map={texture} shininess={1} />
     </mesh>
   );
 }

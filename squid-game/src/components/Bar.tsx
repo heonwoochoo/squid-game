@@ -6,8 +6,9 @@ function Bar(props: JSX.IntrinsicElements["mesh"]) {
   for (let i = 0; i < 49; i++) {
     sideLights.push({ position: [0, 0, i * 0.5 - 1.2 * 10] });
   }
+  console.log("Bar");
   return (
-    <mesh {...props}>
+    <mesh {...props} receiveShadow castShadow>
       <boxGeometry args={[0.1, 0.3, 1.2 * 21]} />
       <meshPhongMaterial color="#441c1d" />
       {props.name === "0" || props.name === "3"
