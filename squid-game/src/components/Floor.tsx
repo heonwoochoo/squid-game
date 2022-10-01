@@ -2,9 +2,17 @@ import { useTexture } from "@react-three/drei";
 import { useLoader } from "@react-three/fiber";
 import * as THREE from "three";
 import { TextureLoader, Vector2 } from "three";
-import { useBox } from "@react-three/cannon";
-function Floor() {
-  const [ref, api] = useBox<THREE.Mesh>(() => ({}));
+import { BoxProps, useBox } from "@react-three/cannon";
+import { useRef } from "react";
+function Floor(props: BoxProps) {
+  const [ref, api] = useBox(
+    () => ({
+      args: [200, 1, 200],
+      type: "Static",
+      ...props,
+    }),
+    useRef<THREE.Mesh>(null)
+  );
   const texture = useLoader(TextureLoader, "img/floor3.jpg");
   texture.repeat = new THREE.Vector2(4, 4);
   texture.wrapS = THREE.RepeatWrapping;

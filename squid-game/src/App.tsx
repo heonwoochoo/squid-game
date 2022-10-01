@@ -1,20 +1,20 @@
 import { Canvas, Vector3 } from "@react-three/fiber";
 import React, { Suspense, useEffect, useRef } from "react";
-import { Physics } from "@react-three/cannon";
+import { Debug, Physics, Triplet } from "@react-three/cannon";
 import * as THREE from "three";
 import "./App.css";
-import CameraController from "./CameraController";
 import Setting from "./Setting";
 import Floor from "./components/Floor";
 import Pillar from "./components/Pillar";
 import Bar from "./components/Bar";
 import Glass from "./components/Glass";
-import Model from "./components/Model";
+import { PointerLockControls } from "@react-three/drei";
+import { Player } from "./components/Player";
 
-interface IGlass {
+export interface IGlass {
   step: number;
   type: "normal" | "strong";
-  position: Vector3;
+  position: Triplet | undefined;
 }
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
     [-spotLightDistance, spotLightDistance, -spotLightDistance],
     [spotLightDistance, spotLightDistance, -spotLightDistance],
   ];
-  const barPosition: Vector3[] = [
+  const barPosition: Triplet[] | undefined = [
     [-1.6, 10.3, 0],
     [-0.4, 10.3, 0],
     [0.4, 10.3, 0],
@@ -59,9 +59,8 @@ function App() {
   }
   return (
     <div id="canvas-container">
-      <Canvas id="canvas">
+      <Canvas id="canvas" camera={{ fov: 45 }}>
         <Setting />
-        <CameraController />
         <ambientLight color="#ffe9ac" intensity={0.7} />
         {spotLightPosition.map((position, i) => (
           <spotLight
@@ -74,7 +73,7 @@ function App() {
           />
         ))}
         <Suspense fallback={null}>
-          <Physics>
+          <Physics gravity={[0, -50, 0]}>
             <Floor />
             <Pillar
               position={[0, 5.5, -glassUnitSize * 12 - glassUnitSize / 2]}
@@ -82,16 +81,27 @@ function App() {
             <Pillar
               position={[0, 5.5, glassUnitSize * 12 + glassUnitSize / 2]}
             />
-
             {barPosition.map((position, i) => (
-              <Bar key={i} position={position} name={i.toString()} />
+              <Bar
+                key={i}
+                position={position}
+                userData={{ name: i.toString() }}
+              />
             ))}
             {glasses.map((glass, i) => (
-              <Glass key={i} position={glass.position} type={glass.type} />
+              <Glass
+                key={i}
+                position={glass.position}
+                userData={{ glassType: glass.type, step: glass.step }}
+              />
             ))}
-            <Model />
+            {/* <Model
+              userData={{ glassPosition: glasses, position: [0, 15, 13] }}
+            /> */}
+            <Player />
           </Physics>
         </Suspense>
+        <PointerLockControls />
       </Canvas>
     </div>
   );

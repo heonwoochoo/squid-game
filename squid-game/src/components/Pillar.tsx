@@ -1,16 +1,20 @@
-import { useBox, Triplet } from "@react-three/cannon";
+import { useBox, Triplet, BoxProps } from "@react-three/cannon";
 import { Vector3 } from "@react-three/fiber";
 import * as THREE from "three";
-
-function Pillar(props: JSX.IntrinsicElements["mesh"]) {
-  const [ref, api] = useBox<THREE.Mesh>(() => ({
-    position: props.position as Triplet,
-  }));
-  console.log(ref, api);
+import { useRef } from "react";
+function Pillar(props: BoxProps) {
+  const [pillar, api] = useBox(
+    () => ({
+      args: [8, 10, 8],
+      type: "Static",
+      ...props,
+    }),
+    useRef<THREE.Mesh>(null)
+  );
   return (
-    <mesh ref={ref} {...props} receiveShadow castShadow>
+    <mesh ref={pillar} receiveShadow castShadow>
       <meshPhongMaterial color="#071d28" />
-      <boxGeometry args={[5, 10, 5]} />
+      <boxGeometry args={[8, 10, 8]} />
     </mesh>
   );
 }
