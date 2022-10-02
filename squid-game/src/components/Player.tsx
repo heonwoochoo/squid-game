@@ -27,10 +27,12 @@ const usePlayerControls = () => {
     jump: false,
   });
   useEffect(() => {
-    const handleKeyDown = (e: any) =>
+    const handleKeyDown = (e: any) => {
       setMovement((m) => ({ ...m, [moveFieldByKey(e.code)]: true }));
-    const handleKeyUp = (e: any) =>
+    };
+    const handleKeyUp = (e: any) => {
       setMovement((m) => ({ ...m, [moveFieldByKey(e.code)]: false }));
+    };
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("keyup", handleKeyUp);
     return () => {
@@ -42,19 +44,31 @@ const usePlayerControls = () => {
 };
 
 export const Player = (props: MeshProps) => {
+  const [jumping, setJumping] = useState(false);
   const [ref, api] = useSphere(
     () => ({
-      mass: 5,
+      mass: 30,
       type: "Dynamic",
-      position: [0, 15, 13],
+      position: [0, 12, 40],
       args: [1],
+      onCollide: (e) => {
+        e.contact.impactVelocity > 25 && console.log("사망");
+        if (e.body.userData?.glassType) {
+          console.log(e.body.userData?.glassType);
+        }
+      },
+      onCollideBegin: () => setJumping(false),
+      onCollideEnd: () => setJumping(true),
     }),
     useRef<THREE.Mesh>(null)
   );
   const { forward, backward, left, right, jump } = usePlayerControls();
   const { camera } = useThree();
   const velocity = useRef([0, 0, 0]);
-  useEffect(() => api.velocity.subscribe((v) => (velocity.current = v)), []);
+  useEffect(() => {
+    api.velocity.subscribe((v) => (velocity.current = v));
+    setJumping(false);
+  }, []);
   useFrame((state) => {
     ref.current?.getWorldPosition(camera.position);
     frontVector.set(0, 0, Number(backward) - Number(forward));
@@ -66,8 +80,9 @@ export const Player = (props: MeshProps) => {
       .applyEuler(camera.rotation);
     speed.fromArray(velocity.current);
     api.velocity.set(direction.x, velocity.current[1], direction.z);
-    if (jump && Math.abs(velocity.current[1].toFixed(2) as any) < 0.1)
-      api.velocity.set(velocity.current[0], 10, velocity.current[2]);
+    if (jump && !jumping) {
+      api.velocity.set(velocity.current[0], 20, velocity.current[2]);
+    }
   });
   return (
     <>

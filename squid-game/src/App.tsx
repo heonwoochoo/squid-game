@@ -18,8 +18,8 @@ export interface IGlass {
 }
 
 function App() {
-  const glassUnitSize = 1.2;
-  const numberOfGlass = 10;
+  const glassUnitSize = 3;
+  const numberOfGlass = 11;
   const spotLightDistance = 50;
   const spotLightPosition: Vector3[] = [
     [-spotLightDistance, spotLightDistance, spotLightDistance],
@@ -28,10 +28,10 @@ function App() {
     [spotLightDistance, spotLightDistance, -spotLightDistance],
   ];
   const barPosition: Triplet[] | undefined = [
-    [-1.6, 10.3, 0],
-    [-0.4, 10.3, 0],
-    [0.4, 10.3, 0],
-    [1.6, 10.3, 0],
+    [-4.0, 10.3, 0],
+    [-1.0, 10.3, 0],
+    [1.0, 10.3, 0],
+    [4.0, 10.3, 0],
   ];
   const glasses = [];
   for (let i = 0; i < numberOfGlass; i++) {
@@ -46,14 +46,14 @@ function App() {
         break;
     }
     const glass1: IGlass = {
-      step: 9 - i + 1,
+      step: 10 - i + 1,
       type: glassTypes[0],
-      position: [-1, 10.5, i * glassUnitSize * 2 - glassUnitSize * 9],
+      position: [-2.5, 10.5, i * glassUnitSize * 2 - glassUnitSize * 10],
     };
     const glass2: IGlass = {
-      step: 9 - i + 1,
+      step: 10 - i + 1,
       type: glassTypes[1],
-      position: [1, 10.5, i * glassUnitSize * 2 - glassUnitSize * 9],
+      position: [2.5, 10.5, i * glassUnitSize * 2 - glassUnitSize * 10],
     };
     glasses.push(glass1, glass2);
   }
@@ -85,19 +85,23 @@ function App() {
               <Bar
                 key={i}
                 position={position}
-                userData={{ name: i.toString() }}
+                userData={{
+                  name: i.toString(),
+                  size: glassUnitSize,
+                }}
               />
             ))}
             {glasses.map((glass, i) => (
               <Glass
                 key={i}
                 position={glass.position}
-                userData={{ glassType: glass.type, step: glass.step }}
+                userData={{
+                  glassType: glass.type,
+                  step: glass.step,
+                  size: glassUnitSize,
+                }}
               />
             ))}
-            {/* <Model
-              userData={{ glassPosition: glasses, position: [0, 15, 13] }}
-            /> */}
             <Player />
           </Physics>
         </Suspense>

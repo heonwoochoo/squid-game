@@ -3,21 +3,19 @@ import { useBox, Triplet, BoxProps } from "@react-three/cannon";
 import { useRef } from "react";
 function Glass(props: BoxProps) {
   const type = props.userData?.glassType;
-  const [glass] = useBox(
+  const size = props.userData?.size;
+  const [glass, api] = useBox(
     () => ({
-      mass: type === "normal" ? 0.1 : 20,
-      args: [1.2, 0.05, 1.2],
+      mass: type === "normal" ? 0.1 : 100,
+      args: [size, 0.05, size],
       type: "Dynamic",
       ...props,
     }),
     useRef<THREE.Mesh>(null)
   );
-  const clickedGlass = () => {
-    console.log(props.userData?.glassType, props.userData?.step);
-  };
   return (
-    <mesh onClick={clickedGlass} ref={glass}>
-      <boxGeometry args={[1.2, 0.05, 1.2]} />
+    <mesh ref={glass}>
+      <boxGeometry args={[size, 0.05, size]} />
       <meshPhongMaterial
         color="#9fdfff"
         transparent={true}
