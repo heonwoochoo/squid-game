@@ -1,7 +1,7 @@
 import { Vector3 } from "@react-three/fiber";
 import * as THREE from "three";
 import SideLight from "./SideLight";
-import { useBox, Triplet, BoxProps } from "@react-three/cannon";
+import { useBox, BoxProps } from "@react-three/cannon";
 import { useRef } from "react";
 function Bar(props: BoxProps) {
   const sideLights: { position: Vector3 }[] = [];

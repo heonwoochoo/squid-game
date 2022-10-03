@@ -1,7 +1,6 @@
-import { useTexture } from "@react-three/drei";
 import { useLoader } from "@react-three/fiber";
 import * as THREE from "three";
-import { TextureLoader, Vector2 } from "three";
+import { TextureLoader } from "three";
 import { BoxProps, useBox } from "@react-three/cannon";
 import { useRef } from "react";
 function Floor(props: BoxProps) {

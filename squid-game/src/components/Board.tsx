@@ -1,12 +1,13 @@
 import { Center, Text3D } from "@react-three/drei";
-import { useRef, useEffect, useState } from "react";
+import { useRef } from "react";
 import { useRecoilValue } from "recoil";
 import * as THREE from "three";
-import { stepState } from "../atoms";
+import { clearState, stepState } from "../atoms";
 function Board() {
   const message1 = "Welcome to squid game";
   const message2 = "believe in yourself";
   const currentStep = useRecoilValue(stepState);
+  const isClear = useRecoilValue(clearState);
   const center = useRef<THREE.Group>(null);
   console.log(center);
   return (
@@ -24,6 +25,7 @@ function Board() {
           <boxGeometry args={[3, 15, 30]} />
           <meshPhongMaterial color="#21262e" />
           <Center
+            visible={!isClear}
             ref={center}
             rotation={[0, Math.PI / 2, 0]}
             position={[1.5, 4, 0]}
@@ -40,6 +42,7 @@ function Board() {
             </Text3D>
           </Center>
           <Center
+            visible={!isClear}
             ref={center}
             rotation={[0, Math.PI / 2, 0]}
             position={[1.5, -5, 0]}
@@ -63,7 +66,7 @@ function Board() {
               size={2}
               font="./font/inter.json"
             >
-              {`step: ${currentStep}`}
+              {isClear ? `Congratulations !` : `step: ${currentStep}`}
               <meshPhongMaterial />
             </Text3D>
           </Center>

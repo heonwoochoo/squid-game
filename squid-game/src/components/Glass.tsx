@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { useBox, Triplet, BoxProps } from "@react-three/cannon";
+import { useBox, BoxProps } from "@react-three/cannon";
 import { useRef } from "react";
 function Glass(props: BoxProps) {
   const type = props.userData?.glassType;

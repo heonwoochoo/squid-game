@@ -1,5 +1,4 @@
-import { useBox, Triplet, BoxProps } from "@react-three/cannon";
-import { Vector3 } from "@react-three/fiber";
+import { useBox, BoxProps } from "@react-three/cannon";
 import * as THREE from "three";
 import { useRef } from "react";
 function Pillar(props: BoxProps) {

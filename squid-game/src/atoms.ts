@@ -14,3 +14,8 @@ export const stepState = atom<number>({
   key: "step",
   default: 0,
 });
+
+export const clearState = atom<boolean>({
+  key: "clear",
+  default: false,
+});

@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import React, { Suspense, useRef, useMemo } from "react";
-import { Physics, Triplet } from "@react-three/cannon";
+import { Debug, Physics, Triplet } from "@react-three/cannon";
 import { useRecoilValue } from "recoil";
 import * as THREE from "three";
 import "./App.css";
@@ -12,8 +12,9 @@ import Glass from "./components/Glass";
 import { PointerLockControls } from "@react-three/drei";
 import { Player } from "./components/Player";
 import Model from "./components/Model";
-import { deadPosState, deadState } from "./atoms";
+import { clearState, deadPosState, deadState } from "./atoms";
 import Board from "./components/Board";
+import Wall from "./components/Wall";
 
 export interface IGlass {
   step: number;
@@ -24,10 +25,10 @@ export interface IGlass {
 function App() {
   const isDead = useRecoilValue(deadState);
   const deadPosition = useRecoilValue(deadPosState);
+  const isClear = useRecoilValue(clearState);
   const model = useRef<THREE.Group>(null);
   const glassUnitSize = 3;
   const numberOfGlass = 11;
-
   const barPosition: Triplet[] | undefined = [
     [-4.0, 10.3, 0],
     [-1.0, 10.3, 0],
@@ -61,7 +62,6 @@ function App() {
     }
     return arr;
   }, []);
-
   // 사망했을 때
   if (isDead === true && model.current) {
     model.current.visible = isDead;
@@ -106,6 +106,7 @@ function App() {
             ))}
             <Player visible={!isDead} />
             <Model ref={model} />
+            {isClear && <Wall />}
           </Physics>
           <Board />
         </Suspense>

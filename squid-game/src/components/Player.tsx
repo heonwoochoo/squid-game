@@ -2,8 +2,8 @@ import * as THREE from "three";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSphere } from "@react-three/cannon";
-import { useThree, useFrame, MeshProps } from "@react-three/fiber";
-import { deadPosState, deadState, stepState } from "../atoms";
+import { useFrame, MeshProps } from "@react-three/fiber";
+import { clearState, deadPosState, deadState, stepState } from "../atoms";
 import {
   usePlayerControls,
   frontVector,
@@ -13,6 +13,7 @@ import {
   speed,
 } from "../control";
 export const Player = (props: MeshProps) => {
+  const [isClear, setIsClear] = useRecoilState(clearState);
   const [jumping, setJumping] = useState(false);
   const [isDead, setIsDead] = useRecoilState(deadState);
   const [deadPosition, setDeadPosition] = useRecoilState(deadPosState);
@@ -24,6 +25,7 @@ export const Player = (props: MeshProps) => {
       position: [0, 12, 40],
       args: [1],
       onCollide: (e) => {
+        // 착지 속도에 따라 사망 판정
         if (e.contact.impactVelocity > 25) {
           console.log("사망");
           setDeadPosition([
@@ -33,8 +35,13 @@ export const Player = (props: MeshProps) => {
           ]);
           setIsDead(true);
         }
+
+        // 착지한 유리 타입,스텝 확인
         if (e.body.userData?.glassType) setCurrentStep(e.body.userData?.step);
+
+        // 클리어 판정 -> 반대편 포인트에 착지했을 경우
         if (e.contact.bj.userData.point === "end") {
+          setIsClear(true);
           console.log("끝");
         }
       },
@@ -79,7 +86,7 @@ export const Player = (props: MeshProps) => {
       .applyEuler(camera.rotation);
     speed.fromArray(velocity.current);
     api.velocity.set(direction.x, velocity.current[1], direction.z);
-    if (jump && !jumping) {
+    if (jump && !jumping && !isClear) {
       api.velocity.set(velocity.current[0], 20, velocity.current[2]);
     }
   });
