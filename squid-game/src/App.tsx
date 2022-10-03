@@ -14,7 +14,6 @@ import { Player } from "./components/Player";
 import Model from "./components/Model";
 import { deadPosState, deadState } from "./atoms";
 import Board from "./components/Board";
-import BoardMsg from "./components/BoardMsg";
 
 export interface IGlass {
   step: number;
@@ -78,9 +77,11 @@ function App() {
             <Floor />
             <Pillar
               position={[0, 5.5, -glassUnitSize * 12 - glassUnitSize / 2]}
+              userData={{ point: "end" }}
             />
             <Pillar
               position={[0, 5.5, glassUnitSize * 12 + glassUnitSize / 2]}
+              userData={{ point: "start" }}
             />
             {barPosition.map((position, i) => (
               <Bar
@@ -107,7 +108,6 @@ function App() {
             <Model ref={model} />
           </Physics>
           <Board />
-          <BoardMsg />
         </Suspense>
         <PointerLockControls />
       </Canvas>

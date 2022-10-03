@@ -1,9 +1,9 @@
 import * as THREE from "three";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSphere } from "@react-three/cannon";
 import { useThree, useFrame, MeshProps } from "@react-three/fiber";
-import { deadPosState, deadState } from "../atoms";
+import { deadPosState, deadState, stepState } from "../atoms";
 import {
   usePlayerControls,
   frontVector,
@@ -16,6 +16,7 @@ export const Player = (props: MeshProps) => {
   const [jumping, setJumping] = useState(false);
   const [isDead, setIsDead] = useRecoilState(deadState);
   const [deadPosition, setDeadPosition] = useRecoilState(deadPosState);
+  const setCurrentStep = useSetRecoilState(stepState);
   const [ref, api] = useSphere(
     () => ({
       mass: 30,
@@ -32,8 +33,9 @@ export const Player = (props: MeshProps) => {
           ]);
           setIsDead(true);
         }
-        if (e.body.userData?.glassType) {
-          console.log(e.body.userData?.glassType, e.body.userData?.step);
+        if (e.body.userData?.glassType) setCurrentStep(e.body.userData?.step);
+        if (e.contact.bj.userData.point === "end") {
+          console.log("끝");
         }
       },
       onCollideBegin: () => setJumping(false),

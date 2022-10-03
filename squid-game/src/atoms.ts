@@ -9,3 +9,8 @@ export const deadPosState = atom<Vector3>({
   key: "deadPosition",
   default: [0, 0, 0],
 });
+
+export const stepState = atom<number>({
+  key: "step",
+  default: 0,
+});
