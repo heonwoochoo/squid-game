@@ -1,19 +1,17 @@
-import { Canvas, GroupProps, Vector3 } from "@react-three/fiber";
-import React, { Suspense, useEffect, useRef, useMemo } from "react";
-import { Debug, Physics, Triplet } from "@react-three/cannon";
-import { motion } from "framer-motion-3d";
+import { Canvas } from "@react-three/fiber";
+import React, { Suspense, useRef, useMemo } from "react";
+import { Physics, Triplet } from "@react-three/cannon";
 import { useRecoilValue } from "recoil";
 import * as THREE from "three";
 import "./App.css";
-import Setting from "./Setting";
+import Setting from "./components/Setting";
 import Floor from "./components/Floor";
 import Pillar from "./components/Pillar";
 import Bar from "./components/Bar";
 import Glass from "./components/Glass";
-import { PerspectiveCamera, PointerLockControls } from "@react-three/drei";
+import { PointerLockControls } from "@react-three/drei";
 import { Player } from "./components/Player";
 import Model from "./components/Model";
-
 import { deadPosState, deadState } from "./atoms";
 
 export interface IGlass {
@@ -28,13 +26,7 @@ function App() {
   const model = useRef<THREE.Group>(null);
   const glassUnitSize = 3;
   const numberOfGlass = 11;
-  const spotLightDistance = 50;
-  const spotLightPosition: Vector3[] = [
-    [-spotLightDistance, spotLightDistance, spotLightDistance],
-    [spotLightDistance, spotLightDistance, spotLightDistance],
-    [-spotLightDistance, spotLightDistance, -spotLightDistance],
-    [spotLightDistance, spotLightDistance, -spotLightDistance],
-  ];
+
   const barPosition: Triplet[] | undefined = [
     [-4.0, 10.3, 0],
     [-1.0, 10.3, 0],
@@ -79,25 +71,6 @@ function App() {
     <div id="canvas-container">
       <Canvas id="canvas" camera={{ fov: 45 }}>
         <Setting />
-        <motion.ambientLight
-          transition={{ duration: 4 }}
-          animate={
-            isDead
-              ? { color: "rgb(235, 15, 15)" }
-              : { color: "rgb(255, 172, 172)" }
-          }
-          intensity={1}
-        />
-        {spotLightPosition.map((position, i) => (
-          <spotLight
-            intensity={1}
-            color="#ffe9ac"
-            position={position}
-            key={i}
-            castShadow
-            shadow-mapSize={[1024, 1024]}
-          />
-        ))}
         <Suspense fallback={null}>
           <Physics gravity={[0, -50, 0]}>
             <Floor />

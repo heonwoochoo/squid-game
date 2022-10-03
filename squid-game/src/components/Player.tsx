@@ -4,47 +4,14 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useSphere } from "@react-three/cannon";
 import { useThree, useFrame, MeshProps } from "@react-three/fiber";
 import { deadPosState, deadState } from "../atoms";
-type KeyType = "KeyW" | "KeyS" | "KeyA" | "KeyD" | "Space";
-const SPEED = 5;
-const keys = {
-  KeyW: "forward",
-  KeyS: "backward",
-  KeyA: "left",
-  KeyD: "right",
-  Space: "jump",
-};
-const moveFieldByKey = (key: KeyType) => keys[key];
-const direction = new THREE.Vector3();
-const frontVector = new THREE.Vector3();
-const sideVector = new THREE.Vector3();
-const rotation = new THREE.Vector3();
-const speed = new THREE.Vector3();
-
-const usePlayerControls = () => {
-  const [movement, setMovement] = useState({
-    forward: false,
-    backward: false,
-    left: false,
-    right: false,
-    jump: false,
-  });
-  useEffect(() => {
-    const handleKeyDown = (e: any) => {
-      setMovement((m) => ({ ...m, [moveFieldByKey(e.code)]: true }));
-    };
-    const handleKeyUp = (e: any) => {
-      setMovement((m) => ({ ...m, [moveFieldByKey(e.code)]: false }));
-    };
-    document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("keyup", handleKeyUp);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("keyup", handleKeyUp);
-    };
-  }, []);
-  return movement;
-};
-
+import {
+  usePlayerControls,
+  frontVector,
+  sideVector,
+  direction,
+  SPEED,
+  speed,
+} from "../control";
 export const Player = (props: MeshProps) => {
   const [jumping, setJumping] = useState(false);
   const [isDead, setIsDead] = useRecoilState(deadState);
@@ -75,7 +42,6 @@ export const Player = (props: MeshProps) => {
     useRef<THREE.Mesh>(null)
   );
   const { forward, backward, left, right, jump } = usePlayerControls();
-  // const { camera } = useThree();
   const velocity = useRef([0, 0, 0]);
   useEffect(() => {
     api.velocity.subscribe((v) => (velocity.current = v));
@@ -91,10 +57,11 @@ export const Player = (props: MeshProps) => {
   useFrame(({ camera, clock }) => {
     if (isDead) {
       // 사망 시 카메라 설정
-      const time = clock.getElapsedTime() * 0.2;
+      const time = clock.getElapsedTime() * 0.1;
+      const posY = time * 10 < 20 ? time * 10 : 20;
       camera.position.set(
-        pos[0] + Math.sin(time) * pos[0] + 10,
-        20,
+        pos[0] + Math.sin(time) * pos[0] * 3,
+        posY,
         pos[2] + Math.cos(time) * pos[2]
       );
       camera.lookAt(pos[0], pos[1], pos[2]);

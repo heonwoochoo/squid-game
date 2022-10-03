@@ -7,7 +7,7 @@ import { useRef } from "react";
 function Floor(props: BoxProps) {
   const [ref, api] = useBox(
     () => ({
-      args: [200, 1, 200],
+      args: [150, 1, 150],
       type: "Static",
       ...props,
     }),
@@ -20,7 +20,7 @@ function Floor(props: BoxProps) {
   console.log("Floor");
   return (
     <mesh ref={ref} receiveShadow>
-      <boxGeometry args={[200, 1, 200]} />
+      <boxGeometry args={[150, 1, 150]} />
       <meshPhongMaterial map={texture} shininess={1} />
     </mesh>
   );

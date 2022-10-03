@@ -19,7 +19,7 @@ function Glass(props: BoxProps) {
       <meshPhongMaterial
         color="#9fdfff"
         transparent={true}
-        opacity={type === "normal" ? 0.3 : 1}
+        opacity={type === "normal" ? 0.5 : 0.8}
       />
     </mesh>
   );
