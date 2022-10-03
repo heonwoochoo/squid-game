@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { useRecoilState } from "recoil";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSphere } from "@react-three/cannon";
 import { useThree, useFrame, MeshProps } from "@react-three/fiber";
 import { deadPosState, deadState } from "../atoms";
@@ -75,12 +75,31 @@ export const Player = (props: MeshProps) => {
     useRef<THREE.Mesh>(null)
   );
   const { forward, backward, left, right, jump } = usePlayerControls();
-  const { camera } = useThree();
+  // const { camera } = useThree();
   const velocity = useRef([0, 0, 0]);
   useEffect(() => {
     api.velocity.subscribe((v) => (velocity.current = v));
   }, []);
-  useFrame((state) => {
+  const pos = useMemo(
+    () =>
+      deadPosition
+        .toLocaleString()
+        .split(",")
+        .map((v) => Number(v)),
+    [deadPosition]
+  );
+  useFrame(({ camera, clock }) => {
+    if (isDead) {
+      // 사망 시 카메라 설정
+      const time = clock.getElapsedTime() * 0.2;
+      camera.position.set(
+        pos[0] + Math.sin(time) * pos[0] + 10,
+        20,
+        pos[2] + Math.cos(time) * pos[2]
+      );
+      camera.lookAt(pos[0], pos[1], pos[2]);
+      return;
+    }
     ref.current?.getWorldPosition(camera.position);
     frontVector.set(0, 0, Number(backward) - Number(forward));
     sideVector.set(Number(left) - Number(right), 0, 0);
@@ -97,7 +116,7 @@ export const Player = (props: MeshProps) => {
   });
   return (
     <>
-      <mesh ref={ref} />
+      <mesh ref={ref} {...props} />
     </>
   );
 };

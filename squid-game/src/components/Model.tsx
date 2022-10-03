@@ -29,7 +29,13 @@ const Model = forwardRef<THREE.Group>((props, ref) => {
     | GLTFResult
     | any;
   return (
-    <group ref={ref} visible={false} scale={0.02} dispose={null}>
+    <group
+      ref={ref}
+      rotation={[0, Math.PI, 0, "XYZ"]}
+      visible={false}
+      scale={0.02}
+      dispose={null}
+    >
       <group>
         <mesh
           castShadow

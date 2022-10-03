@@ -10,7 +10,7 @@ import Floor from "./components/Floor";
 import Pillar from "./components/Pillar";
 import Bar from "./components/Bar";
 import Glass from "./components/Glass";
-import { PointerLockControls } from "@react-three/drei";
+import { PerspectiveCamera, PointerLockControls } from "@react-three/drei";
 import { Player } from "./components/Player";
 import Model from "./components/Model";
 
@@ -73,7 +73,7 @@ function App() {
   if (isDead === true && model.current) {
     model.current.visible = isDead;
     const [x, y, z] = deadPosition.toLocaleString().split(",");
-    model.current.position.set(Number(x) + 12, 0.5, Number(z) - 1);
+    model.current.position.set(Number(x) - 11.5, 0.5, Number(z) + 2);
   }
   return (
     <div id="canvas-container">
@@ -128,7 +128,7 @@ function App() {
                 }}
               />
             ))}
-            <Player />
+            <Player visible={!isDead} />
             <Model ref={model} />
           </Physics>
         </Suspense>
