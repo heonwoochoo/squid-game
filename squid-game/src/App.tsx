@@ -13,6 +13,8 @@ import { PointerLockControls } from "@react-three/drei";
 import { Player } from "./components/Player";
 import Model from "./components/Model";
 import { deadPosState, deadState } from "./atoms";
+import Board from "./components/Board";
+import BoardMsg from "./components/BoardMsg";
 
 export interface IGlass {
   step: number;
@@ -104,6 +106,8 @@ function App() {
             <Player visible={!isDead} />
             <Model ref={model} />
           </Physics>
+          <Board />
+          <BoardMsg />
         </Suspense>
         <PointerLockControls />
       </Canvas>
