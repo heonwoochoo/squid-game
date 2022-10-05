@@ -1,6 +1,6 @@
 import { useBox, BoxProps } from "@react-three/cannon";
 import * as THREE from "three";
-import React, { useMemo, useRef } from "react";
+import React, { useRef } from "react";
 import { useRecoilValue } from "recoil";
 import { unitState } from "../atoms";
 

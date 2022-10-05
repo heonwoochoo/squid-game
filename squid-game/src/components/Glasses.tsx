@@ -1,11 +1,14 @@
 import * as THREE from "three";
-import { useBox, BoxProps, Triplet } from "@react-three/cannon";
-import { Vector3 } from "@react-three/fiber";
+import { useBox } from "@react-three/cannon";
 import React, { useRef, useMemo } from "react";
-import { IGlass } from "../App";
 import { useRecoilValue } from "recoil";
 import { unitState } from "../atoms";
-function Glasses(props: BoxProps) {
+
+interface IMesh {
+  userData: { [key: string]: any };
+}
+
+function Glasses() {
   const { glassSize, glassNumber } = useRecoilValue(unitState);
   const geometry = useMemo(
     () => new THREE.BoxGeometry(glassSize, 0.1, glassSize),
@@ -29,10 +32,8 @@ function Glasses(props: BoxProps) {
       }),
     []
   );
-  interface IMesh {
-    userData: { [key: string]: any };
-  }
-  const meshes = useMemo<IMesh[]>(() => {
+
+  const glassesData = useMemo<IMesh[]>(() => {
     const arr = [];
     for (let i = 0; i < glassNumber; i++) {
       const pattern = Math.round(Math.random());
@@ -40,9 +41,6 @@ function Glasses(props: BoxProps) {
         userData: {
           type: pattern === 0 ? "normal" : "strong",
           step: 10 - i + 1,
-          size: glassSize,
-          geo: geometry,
-          mat: pattern === 0 ? normalMaterial : strongMaterial,
           pos: [-2.5, 10.5, i * glassSize * 2 - glassSize * 10],
         },
       };
@@ -85,8 +83,8 @@ function Glasses(props: BoxProps) {
   console.log("유리가 만들어졌습니다.");
   return (
     <group>
-      {meshes.map((mesh, i) => (
-        <Memoization key={i} userData={mesh.userData} />
+      {glassesData.map((glass, i) => (
+        <Memoization key={i} userData={glass.userData} />
       ))}
     </group>
   );

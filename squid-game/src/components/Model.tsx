@@ -1,7 +1,9 @@
 import * as THREE from "three";
-import React, { forwardRef } from "react";
+import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
+import { useRecoilValue } from "recoil";
+import { deadPosState, deadState } from "../atoms";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -24,13 +26,23 @@ type GLTFResult = GLTF & {
   };
 };
 
-const Model = forwardRef<THREE.Group>((props, ref) => {
+const Model = () => {
+  const isDead = useRecoilValue(deadState);
+  const deadPosition = useRecoilValue(deadPosState);
+  const model = useRef<THREE.Group>(null);
   const { nodes, materials } = useGLTF("models/man_base_mesh.glb") as
     | GLTFResult
     | any;
+
+  // 사망시 시체 위치 조정
+  if (isDead === true && model.current) {
+    model.current.visible = isDead;
+    const [x, y, z] = deadPosition.toLocaleString().split(",");
+    model.current.position.set(Number(x) - 11.5, 0.5, Number(z) + 2);
+  }
   return (
     <group
-      ref={ref}
+      ref={model}
       rotation={[0, Math.PI, 0, "XYZ"]}
       visible={false}
       scale={0.02}
@@ -100,7 +112,7 @@ const Model = forwardRef<THREE.Group>((props, ref) => {
       </group>
     </group>
   );
-});
+};
 
 useGLTF.preload("models/man_base_mesh.glb");
 export default Model;
