@@ -1,5 +1,13 @@
+import { useBox } from "@react-three/cannon";
 import { Vector3 } from "@react-three/fiber/dist/declarations/src";
 import { atom } from "recoil";
+import * as THREE from "three";
+import { useRef } from "react";
+interface IUnit {
+  glassSize: number;
+  glassNumber: number;
+}
+
 export const deadState = atom<boolean>({
   key: "dead",
   default: false,
@@ -18,4 +26,12 @@ export const stepState = atom<number>({
 export const clearState = atom<boolean>({
   key: "clear",
   default: false,
+});
+
+export const unitState = atom<IUnit>({
+  key: "unit",
+  default: {
+    glassSize: 3,
+    glassNumber: 11,
+  },
 });

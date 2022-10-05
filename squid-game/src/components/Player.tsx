@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSphere } from "@react-three/cannon";
-import { useFrame, MeshProps } from "@react-three/fiber";
+import { useFrame, MeshProps, useThree } from "@react-three/fiber";
 import { clearState, deadPosState, deadState, stepState } from "../atoms";
 import {
   usePlayerControls,
@@ -12,12 +12,14 @@ import {
   SPEED,
   speed,
 } from "../control";
+import { useMakeWalls } from "../utils";
 export const Player = (props: MeshProps) => {
   const [isClear, setIsClear] = useRecoilState(clearState);
   const [jumping, setJumping] = useState(false);
   const [isDead, setIsDead] = useRecoilState(deadState);
   const [deadPosition, setDeadPosition] = useRecoilState(deadPosState);
   const setCurrentStep = useSetRecoilState(stepState);
+  const { gl } = useThree();
   const [ref, api] = useSphere(
     () => ({
       mass: 30,
@@ -42,7 +44,6 @@ export const Player = (props: MeshProps) => {
         // 클리어 판정 -> 반대편 포인트에 착지했을 경우
         if (e.contact.bj.userData.point === "end") {
           setIsClear(true);
-          console.log("끝");
         }
       },
       onCollideBegin: () => setJumping(false),

@@ -8,13 +8,14 @@ import Setting from "./components/Setting";
 import Floor from "./components/Floor";
 import Pillar from "./components/Pillar";
 import Bar from "./components/Bar";
-import Glass from "./components/Glass";
+import Glasses from "./components/Glasses";
 import { PointerLockControls } from "@react-three/drei";
 import { Player } from "./components/Player";
 import Model from "./components/Model";
-import { clearState, deadPosState, deadState } from "./atoms";
+import { clearState, deadPosState, deadState, unitState } from "./atoms";
 import Board from "./components/Board";
 import Wall from "./components/Wall";
+import Dollar from "./components/Dollar";
 
 export interface IGlass {
   step: number;
@@ -23,46 +24,19 @@ export interface IGlass {
 }
 
 function App() {
+  console.log("app 렌더링");
   const isDead = useRecoilValue(deadState);
   const deadPosition = useRecoilValue(deadPosState);
   const isClear = useRecoilValue(clearState);
   const model = useRef<THREE.Group>(null);
   const glassUnitSize = 3;
-  const numberOfGlass = 11;
   const barPosition: Triplet[] | undefined = [
     [-4.0, 10.3, 0],
     [-1.0, 10.3, 0],
     [1.0, 10.3, 0],
     [4.0, 10.3, 0],
   ];
-  const glasses: IGlass[] = useMemo(() => {
-    const arr: IGlass[] = [];
-    for (let i = 0; i < numberOfGlass; i++) {
-      const glassTypeNumber = Math.round(Math.random());
-      let glassTypes: IGlass["type"][] = [];
-      switch (glassTypeNumber) {
-        case 0:
-          glassTypes = ["normal", "strong"];
-          break;
-        case 1:
-          glassTypes = ["strong", "normal"];
-          break;
-      }
-      const glass1: IGlass = {
-        step: 10 - i + 1,
-        type: glassTypes[0],
-        position: [-2.5, 10.5, i * glassUnitSize * 2 - glassUnitSize * 10],
-      };
-      const glass2: IGlass = {
-        step: 10 - i + 1,
-        type: glassTypes[1],
-        position: [2.5, 10.5, i * glassUnitSize * 2 - glassUnitSize * 10],
-      };
-      arr.push(glass1, glass2);
-    }
-    return arr;
-  }, []);
-  // 사망했을 때
+  // 사망
   if (isDead === true && model.current) {
     model.current.visible = isDead;
     const [x, y, z] = deadPosition.toLocaleString().split(",");
@@ -75,14 +49,7 @@ function App() {
         <Suspense fallback={null}>
           <Physics gravity={[0, -50, 0]}>
             <Floor />
-            <Pillar
-              position={[0, 5.5, -glassUnitSize * 12 - glassUnitSize / 2]}
-              userData={{ point: "end" }}
-            />
-            <Pillar
-              position={[0, 5.5, glassUnitSize * 12 + glassUnitSize / 2]}
-              userData={{ point: "start" }}
-            />
+            <Pillar />
             {barPosition.map((position, i) => (
               <Bar
                 key={i}
@@ -93,20 +60,11 @@ function App() {
                 }}
               />
             ))}
-            {glasses.map((glass, i) => (
-              <Glass
-                key={i}
-                position={glass.position}
-                userData={{
-                  glassType: glass.type,
-                  step: glass.step,
-                  size: glassUnitSize,
-                }}
-              />
-            ))}
+            <Glasses />
             <Player visible={!isDead} />
             <Model ref={model} />
             {isClear && <Wall />}
+            <Dollar />
           </Physics>
           <Board />
         </Suspense>

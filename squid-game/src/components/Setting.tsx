@@ -17,6 +17,7 @@ function Setting() {
     gl.setPixelRatio(window.devicePixelRatio > 1 ? 2 : 1);
     gl.shadowMap.enabled = true;
     gl.shadowMap.type = THREE.PCFSoftShadowMap;
+    console.log(gl.info);
     // Scene
     scene.background = new THREE.Color("rgb(95, 32, 16)");
   }, []);

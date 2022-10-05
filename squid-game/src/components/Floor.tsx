@@ -18,10 +18,12 @@ function Floor(props: BoxProps) {
   texture.wrapT = THREE.RepeatWrapping;
   console.log("Floor");
   return (
-    <mesh ref={ref} receiveShadow>
-      <boxGeometry args={[150, 1, 150]} />
-      <meshPhongMaterial map={texture} shininess={1} />
-    </mesh>
+    <group dispose={null}>
+      <mesh ref={ref} receiveShadow>
+        <boxGeometry args={[150, 1, 150]} />
+        <meshPhongMaterial map={texture} shininess={1} />
+      </mesh>
+    </group>
   );
 }
 

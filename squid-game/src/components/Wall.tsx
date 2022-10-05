@@ -1,24 +1,19 @@
 import { Triplet, useBox } from "@react-three/cannon";
 import { useRef } from "react";
 import * as THREE from "three";
+import { useMakeWalls } from "../utils";
+
 function Wall() {
   const args: Triplet = [10, 10, 0.1];
-  useBox(
-    () => ({
-      type: "Static",
-      position: [0, 10, -42],
-      args,
-    }),
-    useRef<THREE.Mesh>(null)
-  );
-  useBox(
-    () => ({
-      type: "Static",
-      position: [0, 10, -33],
-      args,
-    }),
-    useRef<THREE.Mesh>(null)
-  );
+  // useBox(
+  //   () => ({
+  //     type: "Static",
+  //     position: [0, 10, -33],
+  //     args,
+  //   }),
+  //   useRef<THREE.Mesh>(null)
+  // );
+  useMakeWalls();
   useBox(
     () => ({
       type: "Static",
@@ -37,7 +32,7 @@ function Wall() {
     }),
     useRef<THREE.Mesh>(null)
   );
-  console.log("hello");
+  console.log("벽 생성");
   return null;
 }
 
