@@ -13,7 +13,6 @@ import {
   speed,
 } from "../control";
 export const Player = (props: MeshProps) => {
-  console.log("플레이어 생성");
   const [isClear, setIsClear] = useRecoilState(clearState);
   const [jumping, setJumping] = useState(false);
   const [isDead, setIsDead] = useRecoilState(deadState);

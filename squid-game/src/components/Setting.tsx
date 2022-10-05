@@ -25,7 +25,7 @@ function Setting() {
     <>
       {spotLightPosition.map((position, i) => (
         <spotLight
-          intensity={1}
+          intensity={0.7}
           color="#ffe9ac"
           position={position}
           key={i}

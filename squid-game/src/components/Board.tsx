@@ -21,9 +21,7 @@ material2.color.set(new THREE.Color("#21262e"));
 const material3 = material.clone();
 material3.color.set(new THREE.Color("white"));
 
-console.log(material, material3);
 function Board() {
-  const ref = useRef<THREE.Mesh>(null);
   const message1 = "Welcome to squid game";
   const message2 = "believe in yourself";
   const currentStep = useRecoilValue(stepState);

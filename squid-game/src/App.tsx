@@ -14,7 +14,7 @@ import Model from "./components/Model";
 import { clearState } from "./atoms";
 import Board from "./components/Board";
 import Wall from "./components/Wall";
-import Dollar from "./components/Dollar";
+import Dollars from "./components/Dollars";
 
 export interface IGlass {
   step: number;
@@ -30,7 +30,7 @@ function App() {
       <Canvas id="canvas" camera={{ fov: 45 }}>
         <Setting />
         <Suspense fallback={null}>
-          <Physics gravity={[0, -50, 0]}>
+          <Physics gravity={isClear ? [0, -3, 0] : [0, -50, 0]}>
             <Floor />
             <Pillar />
             <Bars />
@@ -38,7 +38,7 @@ function App() {
             <Player />
             <Model />
             {isClear && <Wall />}
-            <Dollar />
+            {isClear && <Dollars number={100} />}
           </Physics>
           <Board />
         </Suspense>
