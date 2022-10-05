@@ -7,7 +7,7 @@ import "./App.css";
 import Setting from "./components/Setting";
 import Floor from "./components/Floor";
 import Pillar from "./components/Pillar";
-import Bar from "./components/Bar";
+import Bars from "./components/Bars";
 import Glasses from "./components/Glasses";
 import { PointerLockControls } from "@react-three/drei";
 import { Player } from "./components/Player";
@@ -29,13 +29,6 @@ function App() {
   const deadPosition = useRecoilValue(deadPosState);
   const isClear = useRecoilValue(clearState);
   const model = useRef<THREE.Group>(null);
-  const glassUnitSize = 3;
-  const barPosition: Triplet[] | undefined = [
-    [-4.0, 10.3, 0],
-    [-1.0, 10.3, 0],
-    [1.0, 10.3, 0],
-    [4.0, 10.3, 0],
-  ];
   // 사망
   if (isDead === true && model.current) {
     model.current.visible = isDead;
@@ -50,16 +43,7 @@ function App() {
           <Physics gravity={[0, -50, 0]}>
             <Floor />
             <Pillar />
-            {barPosition.map((position, i) => (
-              <Bar
-                key={i}
-                position={position}
-                userData={{
-                  name: i.toString(),
-                  size: glassUnitSize,
-                }}
-              />
-            ))}
+            <Bars />
             <Glasses />
             <Player visible={!isDead} />
             <Model ref={model} />
