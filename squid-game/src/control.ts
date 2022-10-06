@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import * as THREE from "three";
 type KeyType = "KeyW" | "KeyS" | "KeyA" | "KeyD" | "Space";
-export const SPEED = 5;
+export const SPEED = 6;
 export const keys = {
   KeyW: "forward",
   KeyS: "backward",

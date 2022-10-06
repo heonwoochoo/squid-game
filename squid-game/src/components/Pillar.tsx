@@ -7,10 +7,11 @@ import { unitState } from "../atoms";
 const geometry = new THREE.BoxGeometry(8, 10, 8);
 const matarial = new THREE.MeshPhongMaterial({ color: "#071d28" });
 
-function Pillar() {
+const Pillar = React.memo(() => {
+  console.log("pillar");
   const { glassSize } = useRecoilValue(unitState);
   function PillarMesh({ position, userData }: BoxProps) {
-    const [ref, api] = useBox(
+    const [ref] = useBox(
       () => ({
         args: [8, 10, 8],
         type: "Static",
@@ -33,6 +34,6 @@ function Pillar() {
       />
     </group>
   );
-}
+});
 
 export default React.memo(Pillar);

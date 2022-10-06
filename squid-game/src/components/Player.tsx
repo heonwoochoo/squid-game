@@ -1,9 +1,21 @@
 import * as THREE from "three";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { useEffect, useMemo, useRef, useState, useCallback } from "react";
+import React, {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useCallback,
+} from "react";
 import { CollideEvent, useSphere } from "@react-three/cannon";
 import { useFrame, MeshProps, useThree } from "@react-three/fiber";
-import { clearState, deadPosState, deadState, stepState } from "../atoms";
+import {
+  clearState,
+  clearTimeState,
+  deadPosState,
+  deadState,
+  stepState,
+} from "../atoms";
 import {
   usePlayerControls,
   frontVector,
@@ -12,12 +24,13 @@ import {
   SPEED,
   speed,
 } from "../control";
-export const Player = (props: MeshProps) => {
+const Player = React.memo((props: MeshProps) => {
   const [isClear, setIsClear] = useRecoilState(clearState);
   const [jumping, setJumping] = useState(false);
   const [isDead, setIsDead] = useRecoilState(deadState);
   const [deadPosition, setDeadPosition] = useRecoilState(deadPosState);
   const setCurrentStep = useSetRecoilState(stepState);
+  const [clearTime, setClearTime] = useRecoilState(clearTimeState);
   const handleCollide = useCallback((e: CollideEvent) => {
     // 착지 속도에 따라 사망 판정
     if (e.contact.impactVelocity > 25) {
@@ -35,7 +48,10 @@ export const Player = (props: MeshProps) => {
 
     // 클리어 판정 -> 반대편 포인트에 착지했을 경우
     if (e.contact.bj.userData.point === "end") {
-      setIsClear(true);
+      const event = setTimeout(() => {
+        setIsClear(true);
+        clearTimeout(event);
+      }, 500);
     }
   }, []);
 
@@ -64,7 +80,12 @@ export const Player = (props: MeshProps) => {
         .map((v) => Number(v)),
     [deadPosition]
   );
+
   useFrame(({ camera, clock }) => {
+    if (isClear && !clearTime) {
+      setClearTime(clock.getElapsedTime());
+    }
+
     if (isDead) {
       // 사망 시 카메라 설정
       const time = clock.getElapsedTime() * 0.1;
@@ -92,4 +113,6 @@ export const Player = (props: MeshProps) => {
     }
   });
   return <mesh ref={ref} {...props} visible={!isDead} />;
-};
+});
+
+export default Player;

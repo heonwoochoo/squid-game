@@ -5,7 +5,8 @@ import { useBox, BoxProps, Triplet } from "@react-three/cannon";
 import React, { useRef, useMemo } from "react";
 import { useRecoilValue } from "recoil";
 import { unitState } from "../atoms";
-function Bars(props: BoxProps) {
+const Bars = React.memo(() => {
+  console.log("bars");
   const { glassSize } = useRecoilValue(unitState);
   const geo = useMemo(
     () => new THREE.BoxGeometry(0.1, 0.3, glassSize * 22.35),
@@ -15,12 +16,6 @@ function Bars(props: BoxProps) {
     () => new THREE.MeshPhongMaterial({ color: "#441c1d" }),
     []
   );
-  const barPosition: Triplet[] | undefined = [
-    [-4.0, 10.3, 0],
-    [-1.0, 10.3, 0],
-    [1.0, 10.3, 0],
-    [4.0, 10.3, 0],
-  ];
   const Lights = useMemo(() => {
     const positions: Vector3[] = [];
     for (let i = 0; i < 40; i++) {
@@ -56,6 +51,6 @@ function Bars(props: BoxProps) {
       <Bar position={[4.0, 10.3, 0]} userData={{ key: 3 }} />
     </group>
   );
-}
+});
 
 export default Bars;

@@ -8,7 +8,8 @@ interface IMesh {
   userData: { [key: string]: any };
 }
 
-function Glasses() {
+const Glasses = React.memo(() => {
+  console.log("glasses");
   const { glassSize, glassNumber } = useRecoilValue(unitState);
   const geometry = useMemo(
     () => new THREE.BoxGeometry(glassSize, 0.1, glassSize),
@@ -19,7 +20,7 @@ function Glasses() {
       new THREE.MeshPhysicalMaterial({
         color: "white",
         transmission: 1,
-        roughness: 0.4,
+        roughness: 0.3,
       }),
     []
   );
@@ -56,7 +57,7 @@ function Glasses() {
     }
     return arr;
   }, []);
-  function Glass({ userData }: JSX.IntrinsicElements["mesh"]) {
+  const Glass = React.memo(({ userData }: JSX.IntrinsicElements["mesh"]) => {
     const type = userData?.type;
     const [ref] = useBox(
       () => ({
@@ -78,15 +79,13 @@ function Glasses() {
         material={type === "normal" ? normalMaterial : strongMaterial}
       ></mesh>
     );
-  }
-  const Memoization = React.memo(Glass);
-  console.log("유리가 만들어졌습니다.");
+  });
   return (
     <group>
       {glassesData.map((glass, i) => (
-        <Memoization key={i} userData={glass.userData} />
+        <Glass key={i} userData={glass.userData} />
       ))}
     </group>
   );
-}
+});
 export default Glasses;

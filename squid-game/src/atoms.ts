@@ -1,8 +1,6 @@
-import { useBox } from "@react-three/cannon";
 import { Vector3 } from "@react-three/fiber/dist/declarations/src";
 import { atom } from "recoil";
-import * as THREE from "three";
-import { useRef } from "react";
+
 interface IUnit {
   glassSize: number;
   glassNumber: number;
@@ -34,4 +32,9 @@ export const unitState = atom<IUnit>({
     glassSize: 3,
     glassNumber: 11,
   },
+});
+
+export const clearTimeState = atom<number>({
+  key: "time",
+  default: 0,
 });

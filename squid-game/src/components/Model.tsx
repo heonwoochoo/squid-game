@@ -26,7 +26,8 @@ type GLTFResult = GLTF & {
   };
 };
 
-const Model = () => {
+const Model = React.memo(() => {
+  console.log("model");
   const isDead = useRecoilValue(deadState);
   const deadPosition = useRecoilValue(deadPosState);
   const model = useRef<THREE.Group>(null);
@@ -37,7 +38,7 @@ const Model = () => {
   // 사망시 시체 위치 조정
   if (isDead === true && model.current) {
     model.current.visible = isDead;
-    const [x, y, z] = deadPosition.toLocaleString().split(",");
+    const [x, _, z] = deadPosition.toLocaleString().split(",");
     model.current.position.set(Number(x) - 11.5, 0.5, Number(z) + 2);
   }
   return (
@@ -112,7 +113,7 @@ const Model = () => {
       </group>
     </group>
   );
-};
+});
 
 useGLTF.preload("models/man_base_mesh.glb");
 export default Model;
