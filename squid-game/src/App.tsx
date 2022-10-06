@@ -15,8 +15,7 @@ import { clearState } from "./atoms";
 import Board from "./components/Board";
 import Wall from "./components/Wall";
 import Dollars from "./components/Dollars";
-import { PhysicsProviderProps } from "@react-three/cannon/dist/physics-provider";
-import MoneyGlass from "./components/MoneyGlass";
+import DollarCase from "./components/DollarCase";
 import * as THREE from "three";
 
 export interface IGlass {
@@ -40,9 +39,9 @@ function App() {
             <Glasses />
             <Player />
             <Model />
-            <Dollars number={200} />
+            <Dollars number={100} />
+            <DollarCase />
             {isClear && <Wall />}
-            <MoneyGlass />
           </Physics>
           <Board />
         </Suspense>

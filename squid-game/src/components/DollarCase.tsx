@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { useRecoilValue } from "recoil";
 import * as THREE from "three";
 import { clearState } from "../atoms";
-function MoneyGlass() {
+function DollarCase() {
   const isClear = useRecoilValue(clearState);
   const ref = useRef<THREE.MeshPhysicalMaterial>(null);
   return (
@@ -26,4 +26,4 @@ function MoneyGlass() {
     </Sphere>
   );
 }
-export default MoneyGlass;
+export default DollarCase;

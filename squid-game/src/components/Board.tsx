@@ -24,7 +24,7 @@ function Board() {
   const isClear = useRecoilValue(clearState);
   const clearTime = useRecoilValue(clearTimeState);
   const center = useRef<THREE.Group>(null);
-  if (clearTime) console.log(clearTime);
+  if (clearTime) console.log(clearTime.toFixed(1));
   return (
     <group
       position-x={-20}
@@ -40,7 +40,7 @@ function Board() {
           visible={!isClear}
           ref={center}
           rotation={[0, Math.PI / 2, 0]}
-          position={[1.6, 4, 0]}
+          position={[1.6, 5, 0]}
         >
           <Text
             color={"white"}
@@ -66,9 +66,22 @@ function Board() {
             {message2}
           </Text>
         </Center>
-        <Center position={[1.6, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
+        <Center position={[1.6, 1, 0]} rotation={[0, Math.PI / 2, 0]}>
           <Text lineHeight={1.0} letterSpacing={0.1} fontSize={3}>
-            {isClear ? `Congratulations !` : `step: ${currentStep}`}
+            {isClear
+              ? `Finish!`
+              : currentStep < 1
+              ? `Are you ready?`
+              : `step: ${currentStep}`}
+          </Text>
+        </Center>
+        <Center
+          visible={isClear}
+          position={[1.6, -2, 0]}
+          rotation={[0, Math.PI / 2, 0]}
+        >
+          <Text lineHeight={1.0} letterSpacing={0.1} fontSize={1}>
+            {` ${clearTime.toFixed(1)} sec`}
           </Text>
         </Center>
       </mesh>
