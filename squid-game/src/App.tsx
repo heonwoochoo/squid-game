@@ -18,6 +18,7 @@ import DollarCase from "./components/DollarCase";
 import * as THREE from "three";
 import Loader from "./ui/Loader";
 import Retry from "./ui/Retry";
+import { Camera } from "three";
 
 export interface IGlass {
   step: number;
@@ -29,10 +30,6 @@ function App() {
   console.log("app 렌더링");
   const isClear = useRecoilValue(clearState);
   const isDead = useRecoilValue(deadState);
-  const ref = useRef(null);
-  useEffect(() => {
-    console.log(ref.current);
-  });
   return (
     <div style={{ width: "100%", height: "100%" }}>
       <Canvas
@@ -54,7 +51,12 @@ function App() {
             {isClear && <Wall />}
           </Physics>
           <Board />
-          <PointerLockControls ref={ref} />
+          <PointerLockControls
+            enabled={!isDead}
+            onClick={(e: any) => {
+              if (isDead) e.target.onUnlock();
+            }}
+          />
           {!isClear ? <Retry /> : null}
         </Suspense>
       </Canvas>
