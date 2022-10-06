@@ -1,22 +1,23 @@
 import { Canvas } from "@react-three/fiber";
-import React, { PropsWithChildren, Suspense, useEffect, useRef } from "react";
-import { Debug, Physics, PhysicsProps, Triplet } from "@react-three/cannon";
+import React, { Suspense, useEffect, useRef } from "react";
+import { Physics, Triplet } from "@react-three/cannon";
 import { useRecoilValue } from "recoil";
-import "./App.css";
 import Setting from "./components/Setting";
 import Floor from "./components/Floor";
 import Pillar from "./components/Pillar";
 import Bars from "./components/Bars";
 import Glasses from "./components/Glasses";
-import { PointerLockControls, useDetectGPU } from "@react-three/drei";
+import { PointerLockControls } from "@react-three/drei";
 import Player from "./components/Player";
 import Model from "./components/Model";
-import { clearState } from "./atoms";
+import { clearState, deadState } from "./atoms";
 import Board from "./components/Board";
 import Wall from "./components/Wall";
 import Dollars from "./components/Dollars";
 import DollarCase from "./components/DollarCase";
 import * as THREE from "three";
+import Loader from "./ui/Loader";
+import Retry from "./ui/Retry";
 
 export interface IGlass {
   step: number;
@@ -27,11 +28,20 @@ export interface IGlass {
 function App() {
   console.log("app 렌더링");
   const isClear = useRecoilValue(clearState);
+  const isDead = useRecoilValue(deadState);
+  const ref = useRef(null);
+  useEffect(() => {
+    console.log(ref.current);
+  });
   return (
-    <div id="canvas-container">
-      <Canvas id="canvas" camera={{ fov: 45 }} dpr={[1, 2]}>
+    <div style={{ width: "100%", height: "100%" }}>
+      <Canvas
+        style={{ width: "100%", height: "100%" }}
+        camera={{ fov: 45 }}
+        dpr={[1, 2]}
+      >
         <Setting />
-        <Suspense fallback={null}>
+        <Suspense fallback={<Loader />}>
           <Physics gravity={[0, -50, 0]}>
             <Floor />
             <Pillar />
@@ -44,8 +54,9 @@ function App() {
             {isClear && <Wall />}
           </Physics>
           <Board />
+          <PointerLockControls ref={ref} />
+          {!isClear ? <Retry /> : null}
         </Suspense>
-        <PointerLockControls />
       </Canvas>
     </div>
   );
