@@ -38,3 +38,8 @@ export const clearTimeState = atom<number>({
   key: "time",
   default: 0,
 });
+
+export const respawnCountState = atom<number>({
+  key: "respawnCount",
+  default: 0,
+});

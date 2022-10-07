@@ -1,5 +1,7 @@
 import { Html } from "@react-three/drei";
+import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { deadState, respawnCountState } from "../atoms";
 
 const RetryContainer = styled.div`
   width: 200px;
@@ -26,6 +28,19 @@ const RetryBtn = styled.button`
 `;
 const ExitBtn = styled(RetryBtn)``;
 function Retry() {
+  const [isDead, setIsDead] = useRecoilState(deadState);
+  const setRespawnCount = useSetRecoilState(respawnCountState);
+  const clickRetry = () => {
+    console.log("Respawn");
+    setIsDead(false);
+    setRespawnCount((prev) => prev + 1);
+  };
+
+  const clickExit = () => {
+    console.log("Exit");
+    window.close();
+  };
+
   return (
     <Html
       calculatePosition={() => [
@@ -33,11 +48,11 @@ function Retry() {
         window.innerHeight / 2,
       ]}
     >
-      <RetryContainer>
+      <RetryContainer hidden={!isDead}>
         <Msg>Game Over</Msg>
         <BtnContainer>
-          <RetryBtn>다시하기</RetryBtn>
-          <ExitBtn>종료하기</ExitBtn>
+          <RetryBtn onClick={clickRetry}>Respawn</RetryBtn>
+          <ExitBtn onClick={clickExit}>Exit</ExitBtn>
         </BtnContainer>
       </RetryContainer>
     </Html>

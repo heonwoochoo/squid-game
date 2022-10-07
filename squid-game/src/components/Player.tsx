@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import React, {
   useEffect,
   useMemo,
@@ -7,13 +7,14 @@ import React, {
   useState,
   useCallback,
 } from "react";
-import { CollideEvent, useSphere } from "@react-three/cannon";
+import { CollideEvent, Triplet, useSphere } from "@react-three/cannon";
 import { useFrame, MeshProps, useThree } from "@react-three/fiber";
 import {
   clearState,
   clearTimeState,
   deadPosState,
   deadState,
+  respawnCountState,
   stepState,
 } from "../atoms";
 import {
@@ -23,7 +24,7 @@ import {
   direction,
   SPEED,
   speed,
-} from "../control";
+} from "../utils/control";
 const Player = React.memo((props: MeshProps) => {
   const [isClear, setIsClear] = useRecoilState(clearState);
   const [jumping, setJumping] = useState(false);
@@ -31,6 +32,7 @@ const Player = React.memo((props: MeshProps) => {
   const [deadPosition, setDeadPosition] = useRecoilState(deadPosState);
   const setCurrentStep = useSetRecoilState(stepState);
   const [clearTime, setClearTime] = useRecoilState(clearTimeState);
+  const respawnCount = useRecoilValue(respawnCountState);
   const handleCollide = useCallback((e: CollideEvent) => {
     // 착지 속도에 따라 사망 판정
     if (e.contact.impactVelocity > 25) {
@@ -59,7 +61,7 @@ const Player = React.memo((props: MeshProps) => {
     () => ({
       mass: 30,
       type: "Dynamic",
-      position: [0, 12, 40],
+      position: [0, 12, 40], // 리스폰 위치
       args: [1],
       onCollide: handleCollide,
       onCollideBegin: () => setJumping(false),
@@ -72,6 +74,10 @@ const Player = React.memo((props: MeshProps) => {
   useEffect(() => {
     api.velocity.subscribe((v) => (velocity.current = v));
   }, []);
+
+  useEffect(() => {
+    api.position.set(0, 12, 40); // 부활시 위치 유저 위치 초기화
+  }, [respawnCount]);
   const pos = useMemo(
     () =>
       deadPosition
