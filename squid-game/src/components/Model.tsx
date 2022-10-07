@@ -31,7 +31,7 @@ const Model = React.memo(() => {
   const isDead = useRecoilValue(deadState);
   const deadPosition = useRecoilValue(deadPosState);
   const model = useRef<THREE.Group>(null);
-  const { nodes, materials } = useGLTF("models/man_base_mesh.glb") as
+  const { nodes, materials } = useGLTF("./assets/gltf/man_base_mesh.glb") as
     | GLTFResult
     | any;
 

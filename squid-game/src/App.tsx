@@ -18,7 +18,7 @@ import DollarCase from "./components/DollarCase";
 import * as THREE from "three";
 import Loader from "./ui/Loader";
 import Retry from "./ui/Retry";
-import { Camera } from "three";
+import { PointerLockControls as PointerLockControlsImpl } from "three-stdlib";
 
 export interface IGlass {
   step: number;
@@ -30,6 +30,11 @@ function App() {
   console.log("app 렌더링");
   const isClear = useRecoilValue(clearState);
   const isDead = useRecoilValue(deadState);
+  const pointer = useRef<PointerLockControlsImpl>(null);
+  useEffect(() => {
+    if (pointer.current)
+      isDead ? pointer.current.unlock() : pointer.current.lock();
+  }, [isDead]);
   return (
     <div style={{ width: "100%", height: "100%" }}>
       <Canvas
@@ -52,12 +57,11 @@ function App() {
           </Physics>
           <Board />
           <PointerLockControls
-            enabled={!isDead}
-            onClick={(e: any) => {
-              if (isDead) e.target.onUnlock();
-            }}
+            ref={pointer}
+            onLock={() => console.log("lock")}
+            onUnlock={() => console.log("unlock")}
           />
-          {!isClear ? <Retry /> : null}
+          <Retry />
         </Suspense>
       </Canvas>
     </div>
