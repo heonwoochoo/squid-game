@@ -26,7 +26,12 @@ import {
   SPEED,
   speed,
 } from "../utils/control";
-import { contactNormalGlass, contactStrongGlass } from "../utils/sounds";
+import {
+  contactNormalGlass,
+  contactStrongGlass,
+  deathScream,
+  finishClap,
+} from "../utils/sounds";
 
 const Player = React.memo((props: MeshProps) => {
   const [isClear, setIsClear] = useRecoilState(clearState);
@@ -51,6 +56,7 @@ const Player = React.memo((props: MeshProps) => {
     // 착지 속도에 따라 사망 판정
     if (impactVelocity > 25) {
       console.log("사망");
+      deathScream.play();
       setDeadPosition(contactPosition);
       setIsDead(true);
     }
@@ -64,9 +70,10 @@ const Player = React.memo((props: MeshProps) => {
       }
     }
     // 클리어 판정 -> 반대편 포인트에 착지했을 경우
-    if (e.contact.bj.userData.point === "end") {
+    if (e.contact.bj.userData.point === "end" && !isClear) {
       const event = setTimeout(() => {
         setIsClear(true);
+        finishClap.play();
         clearTimeout(event);
       }, 500);
     }
