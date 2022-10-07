@@ -19,6 +19,7 @@ import * as THREE from "three";
 import Loader from "./ui/Loader";
 import Retry from "./ui/Retry";
 import { PointerLockControls as PointerLockControlsImpl } from "three-stdlib";
+import Doll from "./components/Doll";
 export interface IGlass {
   step: number;
   type: "normal" | "strong";
@@ -52,6 +53,7 @@ function App() {
             <Dollars number={100} />
             <DollarCase />
             {isClear && <Wall />}
+            <Doll position={[17, 1, 0]} scale={7} />
           </Physics>
           <Board />
           <PointerLockControls
