@@ -2,7 +2,6 @@ import { Html } from "@react-three/drei";
 import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { deadState, respawnCountState } from "../atoms";
-
 const RetryContainer = styled.div`
   width: 200px;
   height: 100px;
@@ -35,12 +34,10 @@ function Retry() {
     setIsDead(false);
     setRespawnCount((prev) => prev + 1);
   };
-
   const clickExit = () => {
     console.log("Exit");
     window.close();
   };
-
   return (
     <Html
       calculatePosition={() => [
@@ -58,5 +55,4 @@ function Retry() {
     </Html>
   );
 }
-
 export default Retry;

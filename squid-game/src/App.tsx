@@ -19,13 +19,11 @@ import * as THREE from "three";
 import Loader from "./ui/Loader";
 import Retry from "./ui/Retry";
 import { PointerLockControls as PointerLockControlsImpl } from "three-stdlib";
-
 export interface IGlass {
   step: number;
   type: "normal" | "strong";
   position: Triplet | undefined;
 }
-
 function App() {
   console.log("app 렌더링");
   const isClear = useRecoilValue(clearState);

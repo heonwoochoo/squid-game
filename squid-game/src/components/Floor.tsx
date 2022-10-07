@@ -12,7 +12,7 @@ const Floor = React.memo(() => {
     }),
     useRef<THREE.Mesh>(null)
   );
-  const texture = useLoader(TextureLoader, "./assets/img/floor3.jpg");
+  const texture = useLoader(TextureLoader, "img/floor3.jpg");
   texture.repeat = new THREE.Vector2(4, 4);
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;

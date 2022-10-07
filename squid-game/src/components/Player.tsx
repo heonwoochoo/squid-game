@@ -44,10 +44,8 @@ const Player = React.memo((props: MeshProps) => {
       ]);
       setIsDead(true);
     }
-
     // 착지한 유리 타입,스텝 확인
     if (e.body.userData?.glassType) setCurrentStep(e.body.userData?.step);
-
     // 클리어 판정 -> 반대편 포인트에 착지했을 경우
     if (e.contact.bj.userData.point === "end") {
       const event = setTimeout(() => {
@@ -56,7 +54,6 @@ const Player = React.memo((props: MeshProps) => {
       }, 500);
     }
   }, []);
-
   const [ref, api] = useSphere(
     () => ({
       mass: 30,
@@ -74,7 +71,6 @@ const Player = React.memo((props: MeshProps) => {
   useEffect(() => {
     api.velocity.subscribe((v) => (velocity.current = v));
   }, []);
-
   useEffect(() => {
     api.position.set(0, 12, 40); // 부활시 위치 유저 위치 초기화
   }, [respawnCount]);
@@ -86,12 +82,10 @@ const Player = React.memo((props: MeshProps) => {
         .map((v) => Number(v)),
     [deadPosition]
   );
-
   useFrame(({ camera, clock }) => {
     if (isClear && !clearTime) {
       setClearTime(clock.getElapsedTime());
     }
-
     if (isDead) {
       // 사망 시 카메라 설정
       const time = clock.getElapsedTime() * 0.1;
@@ -120,5 +114,4 @@ const Player = React.memo((props: MeshProps) => {
   });
   return <mesh ref={ref} {...props} visible={!isDead} />;
 });
-
 export default Player;
