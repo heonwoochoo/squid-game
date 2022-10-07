@@ -1,4 +1,5 @@
 import * as THREE from "three";
+
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import React, {
   useEffect,
@@ -8,7 +9,7 @@ import React, {
   useCallback,
 } from "react";
 import { CollideEvent, Triplet, useSphere } from "@react-three/cannon";
-import { useFrame, MeshProps, useThree } from "@react-three/fiber";
+import { useFrame, MeshProps, useThree, Vector3 } from "@react-three/fiber";
 import {
   clearState,
   clearTimeState,
@@ -25,6 +26,8 @@ import {
   SPEED,
   speed,
 } from "../utils/control";
+import { contactNormalGlass, contactStrongGlass } from "../utils/sounds";
+
 const Player = React.memo((props: MeshProps) => {
   const [isClear, setIsClear] = useRecoilState(clearState);
   const [jumping, setJumping] = useState(false);
@@ -33,19 +36,33 @@ const Player = React.memo((props: MeshProps) => {
   const setCurrentStep = useSetRecoilState(stepState);
   const [clearTime, setClearTime] = useRecoilState(clearTimeState);
   const respawnCount = useRecoilValue(respawnCountState);
+  const { camera } = useThree();
   const handleCollide = useCallback((e: CollideEvent) => {
+    const type = e.body.userData?.glassType;
+    const step = e.body.userData?.step;
+    const impactVelocity = e.contact.impactVelocity;
+    const contactPosition: Vector3 = [
+      e.contact.contactPoint[0],
+      e.contact.contactPoint[1],
+      e.contact.contactPoint[2],
+    ];
+    console.log(impactVelocity);
+
     // 착지 속도에 따라 사망 판정
-    if (e.contact.impactVelocity > 25) {
+    if (impactVelocity > 25) {
       console.log("사망");
-      setDeadPosition([
-        e.contact.contactPoint[0],
-        e.contact.contactPoint[1],
-        e.contact.contactPoint[2],
-      ]);
+      setDeadPosition(contactPosition);
       setIsDead(true);
     }
     // 착지한 유리 타입,스텝 확인
-    if (e.body.userData?.glassType) setCurrentStep(e.body.userData?.step);
+    if (type) {
+      setCurrentStep(step);
+      if (impactVelocity > 15) {
+        type === "normal"
+          ? contactNormalGlass.play()
+          : contactStrongGlass.play();
+      }
+    }
     // 클리어 판정 -> 반대편 포인트에 착지했을 경우
     if (e.contact.bj.userData.point === "end") {
       const event = setTimeout(() => {
@@ -73,6 +90,7 @@ const Player = React.memo((props: MeshProps) => {
   }, []);
   useEffect(() => {
     api.position.set(0, 12, 40); // 부활시 위치 유저 위치 초기화
+    camera.lookAt(0, 12, -40);
   }, [respawnCount]);
   const pos = useMemo(
     () =>

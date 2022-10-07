@@ -19,11 +19,6 @@ function Doll(props: JSX.IntrinsicElements["group"]) {
     | GLTFResult
     | any;
   const ref = useRef<THREE.Group>(null);
-  const state = useThree();
-  console.log(state.camera.position);
-  useEffect(() => {
-    ref.current?.lookAt(0, 12, 40);
-  }, []);
   useFrame(({ camera }) => {
     ref.current?.lookAt(camera.position);
   });
