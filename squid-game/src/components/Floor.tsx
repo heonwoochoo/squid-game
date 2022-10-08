@@ -9,6 +9,7 @@ const Floor = React.memo(() => {
     () => ({
       args: [150, 1, 150],
       type: "Static",
+      userData: { name: "floor" },
     }),
     useRef<THREE.Mesh>(null)
   );

@@ -26,6 +26,7 @@ const RetryBtn = styled.button`
   margin-bottom: 10px;
 `;
 const ExitBtn = styled(RetryBtn)``;
+
 function Retry() {
   const [isDead, setIsDead] = useRecoilState(deadState);
   const setRespawnCount = useSetRecoilState(respawnCountState);

@@ -21,6 +21,8 @@ const Glasses = React.memo(() => {
         color: "white",
         transmission: 1,
         roughness: 0.3,
+        clearcoat: 0.5,
+        reflectivity: 0.5,
       }),
     []
   );
@@ -29,7 +31,9 @@ const Glasses = React.memo(() => {
       new THREE.MeshPhysicalMaterial({
         color: "white",
         transmission: 1,
-        roughness: 0.6,
+        roughness: 0.4,
+        clearcoat: 0.5,
+        reflectivity: 0.5,
       }),
     []
   );

@@ -7,7 +7,7 @@ const LoadingContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 200px;
 `;
 
 const LoadingText = styled.h1`
@@ -58,7 +58,12 @@ const loadingCircleTransition = {
 
 function Loader() {
   return (
-    <Html>
+    <Html
+      calculatePosition={() => [
+        window.innerWidth / 2 - 100,
+        window.innerHeight / 2 - 50,
+      ]}
+    >
       <LoadingContainer>
         <LoadingText>Loading...</LoadingText>
         <CircleContainer

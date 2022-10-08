@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import * as THREE from "three";
 
 function Setting() {
-  const { gl, scene } = useThree();
+  const { gl, scene, camera } = useThree();
   const spotLightDistance = 50;
   const spotLightPosition: Vector3[] = [
     [-spotLightDistance, spotLightDistance, spotLightDistance],

@@ -33,16 +33,17 @@ import {
   finishClap,
 } from "../utils/sounds";
 
-const Player = React.memo((props: MeshProps) => {
+const Player = (props: MeshProps) => {
   const [isClear, setIsClear] = useRecoilState(clearState);
   const [jumping, setJumping] = useState(false);
   const [isDead, setIsDead] = useRecoilState(deadState);
   const [deadPosition, setDeadPosition] = useRecoilState(deadPosState);
-  const setCurrentStep = useSetRecoilState(stepState);
+  const [currentStep, setCurrentStep] = useRecoilState(stepState);
   const [clearTime, setClearTime] = useRecoilState(clearTimeState);
   const respawnCount = useRecoilValue(respawnCountState);
   const { camera } = useThree();
-  const handleCollide = useCallback((e: CollideEvent) => {
+
+  const handleCollide = useCallback((e: any) => {
     const type = e.body.userData?.glassType;
     const step = e.body.userData?.step;
     const impactVelocity = e.contact.impactVelocity;
@@ -51,10 +52,9 @@ const Player = React.memo((props: MeshProps) => {
       e.contact.contactPoint[1],
       e.contact.contactPoint[2],
     ];
-    console.log(impactVelocity);
 
-    // 착지 속도에 따라 사망 판정
-    if (impactVelocity > 25) {
+    // 바닥에 착지 -> 사망
+    if (e.body.userData?.name === "floor") {
       console.log("사망");
       deathScream.play();
       setDeadPosition(contactPosition);
@@ -67,6 +67,8 @@ const Player = React.memo((props: MeshProps) => {
         type === "normal"
           ? contactNormalGlass.play()
           : contactStrongGlass.play();
+      } else if (Math.abs(step - currentStep) > 1) {
+        console.log("부정행위 적발");
       }
     }
     // 클리어 판정 -> 반대편 포인트에 착지했을 경우
@@ -83,7 +85,8 @@ const Player = React.memo((props: MeshProps) => {
       mass: 30,
       type: "Dynamic",
       position: [0, 12, 40], // 리스폰 위치
-      args: [1],
+      args: [0.9],
+      userData: { stpe: currentStep },
       onCollide: handleCollide,
       onCollideBegin: () => setJumping(false),
       onCollideEnd: () => setJumping(true),
@@ -98,6 +101,7 @@ const Player = React.memo((props: MeshProps) => {
   useEffect(() => {
     api.position.set(0, 12, 40); // 부활시 위치 유저 위치 초기화
     camera.lookAt(0, 12, -40);
+    setCurrentStep(0);
   }, [respawnCount]);
   const pos = useMemo(
     () =>
@@ -138,5 +142,5 @@ const Player = React.memo((props: MeshProps) => {
     }
   });
   return <mesh ref={ref} {...props} visible={!isDead} />;
-});
+};
 export default Player;

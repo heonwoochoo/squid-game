@@ -43,3 +43,13 @@ export const respawnCountState = atom<number>({
   key: "respawnCount",
   default: 0,
 });
+
+export const volumeState = atom<boolean>({
+  key: "volume",
+  default: true,
+});
+
+export const pointerLockState = atom<boolean>({
+  key: "pointerLock",
+  default: false,
+});
