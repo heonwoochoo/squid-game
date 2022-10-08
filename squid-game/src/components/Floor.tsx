@@ -1,8 +1,7 @@
-import { useLoader } from "@react-three/fiber";
 import * as THREE from "three";
-import { TextureLoader } from "three";
-import { BoxProps, useBox } from "@react-three/cannon";
+import { useBox } from "@react-three/cannon";
 import React, { useRef } from "react";
+import { useTexture } from "@react-three/drei";
 const Floor = React.memo(() => {
   console.log("Floor");
   const [ref, api] = useBox(
@@ -13,16 +12,18 @@ const Floor = React.memo(() => {
     }),
     useRef<THREE.Mesh>(null)
   );
-  const texture = useLoader(TextureLoader, "./assets/img/floor3.jpg");
-  texture.repeat = new THREE.Vector2(4, 4);
-  texture.wrapS = THREE.RepeatWrapping;
-  texture.wrapT = THREE.RepeatWrapping;
+
+  const texture = useTexture("./assets/img/floor3.jpg", () => {
+    texture.repeat = new THREE.Vector2(4, 4);
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+  });
 
   return (
-    <group dispose={null}>
-      <mesh ref={ref} receiveShadow>
+    <group receiveShadow>
+      <mesh ref={ref} receiveShadow={true}>
         <boxGeometry args={[150, 1, 150]} />
-        <meshPhongMaterial map={texture} shininess={1} />
+        <meshPhongMaterial normalMap={texture} shininess={0.05} />
       </mesh>
     </group>
   );

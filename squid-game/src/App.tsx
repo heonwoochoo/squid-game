@@ -23,6 +23,7 @@ import Doll from "./components/Doll";
 import { backgroungMusic } from "./utils/sounds";
 import VolumeSwitch from "./ui/VolumeSwitch";
 import Letters from "./components/Letters";
+import LifeIcons from "./components/LifeIcons";
 export interface IGlass {
   step: number;
   type: "normal" | "strong";
@@ -53,6 +54,7 @@ function App() {
   return (
     <div style={{ width: "100%", height: "100%" }}>
       <Canvas
+        shadows={true}
         ref={canvas}
         style={{ width: "100%", height: "100%" }}
         camera={{ fov: 45 }}
@@ -74,6 +76,7 @@ function App() {
           </Physics>
           <Board />
           <Letters />
+          <LifeIcons />
           <PointerLockControls
             ref={pointer}
             onLock={handlePointerLock}

@@ -1,7 +1,7 @@
 import { Vector3 } from "@react-three/fiber";
 import * as THREE from "three";
 import SideLight from "./SideLight";
-import { useBox, BoxProps, Triplet } from "@react-three/cannon";
+import { useBox, BoxProps } from "@react-three/cannon";
 import React, { useRef, useMemo } from "react";
 import { useRecoilValue } from "recoil";
 import { unitState } from "../atoms";
@@ -16,6 +16,7 @@ const Bars = React.memo(() => {
     () => new THREE.MeshPhongMaterial({ color: "#441c1d" }),
     []
   );
+
   const Lights = useMemo(() => {
     const positions: Vector3[] = [];
     for (let i = 0; i < 40; i++) {

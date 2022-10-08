@@ -1,6 +1,6 @@
-import { useBox, useSphere } from "@react-three/cannon";
+import { useBox } from "@react-three/cannon";
 import { useTexture } from "@react-three/drei";
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { useRecoilValue } from "recoil";
 import * as THREE from "three";
 import { clearState } from "../atoms";

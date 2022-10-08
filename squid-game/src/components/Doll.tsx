@@ -1,8 +1,8 @@
 import * as THREE from "three";
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
-import { useThree, useFrame } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 type GLTFResult = GLTF & {
   nodes: {
     Body_Material001_0: THREE.Mesh;

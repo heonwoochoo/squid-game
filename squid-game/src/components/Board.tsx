@@ -1,5 +1,5 @@
-import { Center, Text, Text3D } from "@react-three/drei";
-import { useRef, useEffect } from "react";
+import { Center, Text, useTexture } from "@react-three/drei";
+import { useRef } from "react";
 import { useRecoilValue } from "recoil";
 import * as THREE from "three";
 import { clearState, clearTimeState, stepState } from "../atoms";
@@ -14,8 +14,6 @@ const boardGeo = new THREE.BoxGeometry(3, 15, 30);
 const material = new THREE.MeshPhongMaterial({ color: "#2c3e50" });
 
 // 전광판
-const material2 = material.clone();
-material2.color.set(new THREE.Color("black"));
 
 function Board() {
   const message1 = "Welcome to squid game";
@@ -25,6 +23,12 @@ function Board() {
   const clearTime = useRecoilValue(clearTimeState);
   const center = useRef<THREE.Group>(null);
   if (clearTime) console.log(clearTime.toFixed(1));
+
+  const texture = useTexture("/assets/img/frontman3.jpg", () => {
+    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+  });
+  const material2 = material.clone();
+  material2.map = texture;
   return (
     <group
       position-x={-20}

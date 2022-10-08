@@ -5,7 +5,10 @@ import { useRecoilValue } from "recoil";
 import { unitState } from "../atoms";
 
 const geometry = new THREE.BoxGeometry(8, 10, 8);
-const matarial = new THREE.MeshPhongMaterial({ color: "#071d28" });
+const matarial = new THREE.MeshPhongMaterial({
+  color: "#4c0832",
+  shininess: 0.1,
+});
 
 const Pillar = React.memo(() => {
   console.log("pillar");
@@ -20,7 +23,15 @@ const Pillar = React.memo(() => {
       }),
       useRef<THREE.Mesh>(null)
     );
-    return <mesh ref={ref} geometry={geometry} material={matarial}></mesh>;
+    return (
+      <mesh
+        ref={ref}
+        geometry={geometry}
+        material={matarial}
+        receiveShadow={true}
+        castShadow={true}
+      ></mesh>
+    );
   }
   return (
     <group>

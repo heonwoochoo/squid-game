@@ -1,6 +1,5 @@
-import { Box, Sphere, useBounds } from "@react-three/drei";
-import { useEffect, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { Sphere } from "@react-three/drei";
+import { useRef } from "react";
 import { useRecoilValue } from "recoil";
 import * as THREE from "three";
 import { clearState } from "../atoms";
