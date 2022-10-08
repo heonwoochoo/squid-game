@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import React, { Suspense, useEffect, useRef } from "react";
-import { Physics, Triplet } from "@react-three/cannon";
+import { Debug, Physics, Triplet } from "@react-three/cannon";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Setting from "./components/Setting";
 import Floor from "./components/Floor";
@@ -33,7 +33,6 @@ backgroungMusic.stop();
 backgroungMusic.play();
 
 function App() {
-  console.log("app 렌더링");
   const [isLock, setIsLock] = useRecoilState(pointerLockState);
   const isClear = useRecoilValue(clearState);
   const isDead = useRecoilValue(deadState);
@@ -71,7 +70,9 @@ function App() {
             <Model />
             <Dollars number={100} />
             <DollarCase />
-            {isClear && <Wall />}
+            <Debug color="black" scale={1.1}>
+              {isClear && <Wall />}
+            </Debug>
             <Doll position={[17, 1, 0]} scale={7} />
           </Physics>
           <Board />

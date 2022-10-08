@@ -31,6 +31,7 @@ import {
   contactStrongGlass,
   deathScream,
   finishClap,
+  jumpSound,
 } from "../utils/sounds";
 
 const Player = (props: MeshProps) => {
@@ -55,7 +56,6 @@ const Player = (props: MeshProps) => {
 
     // 바닥에 착지 -> 사망
     if (e.body.userData?.name === "floor") {
-      console.log("사망");
       deathScream.play();
       setDeadPosition(contactPosition);
       setIsDead(true);
@@ -67,8 +67,7 @@ const Player = (props: MeshProps) => {
         type === "normal"
           ? contactNormalGlass.play()
           : contactStrongGlass.play();
-      } else if (Math.abs(step - currentStep) > 1) {
-        console.log("부정행위 적발");
+      } else if (impactVelocity < 5) {
       }
     }
     // 클리어 판정 -> 반대편 포인트에 착지했을 경우
@@ -100,7 +99,7 @@ const Player = (props: MeshProps) => {
   }, []);
   useEffect(() => {
     api.position.set(0, 12, 40); // 부활시 위치 유저 위치 초기화
-    camera.lookAt(0, 12, -40);
+    camera.lookAt(0, 15, -40);
     setCurrentStep(0);
   }, [respawnCount]);
   const pos = useMemo(
@@ -138,6 +137,7 @@ const Player = (props: MeshProps) => {
     speed.fromArray(velocity.current);
     api.velocity.set(direction.x, velocity.current[1], direction.z);
     if (jump && !jumping && !isClear) {
+      jumpSound.play();
       api.velocity.set(velocity.current[0], 20, velocity.current[2]);
     }
   });

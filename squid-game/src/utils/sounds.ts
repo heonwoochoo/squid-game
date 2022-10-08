@@ -29,3 +29,8 @@ export const finishClap = new Howl({
     finishClap.volume(0);
   },
 });
+
+export const jumpSound = new Howl({
+  src: ["assets/sounds/jump.wav"],
+  volume: backgroundVolumeSize,
+});

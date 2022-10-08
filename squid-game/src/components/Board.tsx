@@ -10,10 +10,8 @@ const floorGeo = new THREE.BoxGeometry(10, 0.3, 10);
 const boardGeo = new THREE.BoxGeometry(3, 15, 30);
 
 // Material
-// 바닥, 기둥
 const material = new THREE.MeshPhongMaterial({ color: "#2c3e50" });
-
-// 전광판
+const material2 = material.clone();
 
 function Board() {
   const message1 = "Welcome to squid game";
@@ -22,12 +20,9 @@ function Board() {
   const isClear = useRecoilValue(clearState);
   const clearTime = useRecoilValue(clearTimeState);
   const center = useRef<THREE.Group>(null);
-  if (clearTime) console.log(clearTime.toFixed(1));
-
   const texture = useTexture("/assets/img/frontman3.jpg", () => {
     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
   });
-  const material2 = material.clone();
   material2.map = texture;
   return (
     <group

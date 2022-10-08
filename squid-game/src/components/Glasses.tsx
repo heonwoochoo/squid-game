@@ -72,7 +72,7 @@ const Glasses = React.memo(() => {
           step: userData?.step,
         },
         type: "Dynamic",
-        mass: type === "normal" ? 1 : 100,
+        mass: type === "normal" ? 1 : 200,
       }),
       useRef<THREE.Mesh>(null)
     );

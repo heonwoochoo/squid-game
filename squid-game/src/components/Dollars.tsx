@@ -5,7 +5,6 @@ import { useRecoilValue } from "recoil";
 import * as THREE from "three";
 import { clearState } from "../atoms";
 function Dollars({ number = 10 }) {
-  console.log("dollars");
   const texture = useTexture({ map: "assets/img/dollar1.jpg" });
   const isClear = useRecoilValue(clearState);
   const [ref, api] = useBox(

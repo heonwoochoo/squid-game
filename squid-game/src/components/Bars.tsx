@@ -6,7 +6,6 @@ import React, { useRef, useMemo } from "react";
 import { useRecoilValue } from "recoil";
 import { unitState } from "../atoms";
 const Bars = React.memo(() => {
-  console.log("bars");
   const { glassSize } = useRecoilValue(unitState);
   const geo = useMemo(
     () => new THREE.BoxGeometry(0.1, 0.3, glassSize * 22.35),

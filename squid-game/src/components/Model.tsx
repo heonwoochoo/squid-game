@@ -27,7 +27,6 @@ type GLTFResult = GLTF & {
 };
 
 const Model = React.memo(() => {
-  console.log("model");
   const isDead = useRecoilValue(deadState);
   const deadPosition = useRecoilValue(deadPosState);
   const model = useRef<THREE.Group>(null);

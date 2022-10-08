@@ -11,7 +11,6 @@ const matarial = new THREE.MeshPhongMaterial({
 });
 
 const Pillar = React.memo(() => {
-  console.log("pillar");
   const { glassSize } = useRecoilValue(unitState);
   function PillarMesh({ position, userData }: BoxProps) {
     const [ref] = useBox(
