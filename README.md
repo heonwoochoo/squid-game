@@ -6,8 +6,7 @@
 - 🎨 [Presentation](#🎨-presentation)
 - 🚩 [Technologies](#🚩-technologies)
 - 🕸️ [Project Structure](#🕸️-project-structure)
-- 🚀 [Basic Explanation](#🚀-basic-explanation)
-- 🌎 [Contact](#🌎-contact)
+- ✍ [Blog Posting](#✍-blog-posting)
 
 </br>
 
@@ -25,13 +24,14 @@
 
 ### 👉 [play game now !](https://glass-stepping-stone.netlify.app/)
 
-- 드라마 속 게임 룰과 동일하게 양 옆의 한 쌍의 유리 중 하나는 일반, 하나는 강화 유리로 각 스텝마다 랜덤하게 세팅이 되어있습니다.
+- 드라마 속 게임 룰과 동일하게 양 옆의 한 쌍의 유리 중 하나는 일반, 하나는 강화 유리로 각 스텝마다 랜덤하게 설정이 되어있습니다.
 - 조작은 FPS 키보드 방식(w,a,s,d,space)로 구현했습니다.
 - 맵 가운데 떠있는 달고나는 라이프 수를 나타내며 일반 유리를 밟아 추락시 재도전의 기회가 주어집니다.
 - 플레이어의 움직임에 따라 오른쪽 인형의 시선과 몸 방향이 돌아갑니다.
 - 유리를 건널 때마다 전광판에 현재 스텝이 표시됩니다.
 - 다리를 다 건널시 상금이 주어집니다.
-  ##### _(hint: 일반유리와 강화유리는 표면이 약간 다릅니다! 👀)_
+
+##### _(hint: 일반유리와 강화유리는 표면이 약간 다릅니다! 👀)_
 
 </br>
 
@@ -65,11 +65,9 @@
 ┣ 📜[index.tsx](./src/index.tsx)
 
 - **components** folder: scene에서 뼈대가 되는 주요 3D Object들이 있습니다. (light, mesh, gltf-model, ...)
-- **UI** folder: scene에 객체로 들어가지 않는 화면에 평면상으로 나타나는 HTML Element UI로 구성되어 있습니다. (로딩 화면, 재시작 버튼, 음소거 아이콘)
+- **UI** folder: scene에 Object로 안들어가고 화면에 평면상으로 나타나는 UI 컴포넌트로 구성되어 있습니다. (로딩 화면, 재시작 버튼, 음소거 아이콘)
 - **utils** folder: 컴포넌트에서 자주 호출되는 함수를 모듈로 분리했습니다. (키보드 컨트롤, 효과음 재생)
 
 </br>
 
-## 🚀 Basic Explanation
-
-## 🌎 Contact
+## ✍ Blog Posting
