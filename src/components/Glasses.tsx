@@ -12,7 +12,7 @@ const Glasses = React.memo(() => {
   const { glassSize, glassNumber } = useRecoilValue(unitState);
   const geometry = useMemo(
     () => new THREE.BoxGeometry(glassSize, 0.1, glassSize),
-    []
+    [glassSize]
   );
   const normalMaterial = useMemo(
     () =>
@@ -59,7 +59,7 @@ const Glasses = React.memo(() => {
       arr.push(glassRight, glassLeft);
     }
     return arr;
-  }, []);
+  }, [glassNumber, glassSize]);
   const Glass = React.memo(({ userData }: JSX.IntrinsicElements["mesh"]) => {
     const type = userData?.type;
     const [ref] = useBox(

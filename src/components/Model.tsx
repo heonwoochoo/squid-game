@@ -37,7 +37,7 @@ const Model = React.memo(() => {
   // 사망시 시체 위치 조정
   if (isDead === true && model.current) {
     model.current.visible = isDead;
-    const [x, _, z] = deadPosition.toLocaleString().split(",");
+    const [x, , z] = deadPosition.toLocaleString().split(",");
     model.current.position.set(Number(x) - 11.5, 0.5, Number(z) + 2);
   }
   return (

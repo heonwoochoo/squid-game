@@ -9,7 +9,7 @@ const Bars = React.memo(() => {
   const { glassSize } = useRecoilValue(unitState);
   const geo = useMemo(
     () => new THREE.BoxGeometry(0.1, 0.3, glassSize * 22.35),
-    []
+    [glassSize]
   );
   const mat = useMemo(
     () => new THREE.MeshPhongMaterial({ color: "#441c1d" }),
@@ -22,7 +22,7 @@ const Bars = React.memo(() => {
       positions.push([0, 0, i * 1.5 - glassSize * 9]);
     }
     return positions;
-  }, []);
+  }, [glassSize]);
   const Bar = React.memo(({ position, userData }: BoxProps) => {
     const [bar] = useBox(
       () => ({
