@@ -71,3 +71,5 @@
 </br>
 
 ## ✍ Blog Posting
+
+### 📌[프로젝트 회고](https://choogro.tistory.com/56)
