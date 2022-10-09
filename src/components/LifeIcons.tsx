@@ -1,6 +1,6 @@
 import { Image } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useRecoilValue } from "recoil";
 import * as THREE from "three";
 import { respawnCountState } from "../atoms";

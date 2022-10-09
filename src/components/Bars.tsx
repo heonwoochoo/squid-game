@@ -24,7 +24,7 @@ const Bars = React.memo(() => {
     return positions;
   }, []);
   const Bar = React.memo(({ position, userData }: BoxProps) => {
-    const [bar, api] = useBox(
+    const [bar] = useBox(
       () => ({
         args: [0.1, 0.1, glassSize * 22.35],
         type: "Static",

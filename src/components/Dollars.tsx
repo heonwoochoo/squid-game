@@ -7,8 +7,8 @@ import { clearState } from "../atoms";
 function Dollars({ number = 10 }) {
   const texture = useTexture({ map: "./assets/img/dollar1.jpg" });
   const isClear = useRecoilValue(clearState);
-  const [ref, api] = useBox(
-    (index) => ({
+  const [ref] = useBox(
+    () => ({
       type: "Static",
       args: [0.47, 0.001, 0.2],
       position: [

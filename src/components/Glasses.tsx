@@ -9,7 +9,6 @@ interface IMesh {
 }
 
 const Glasses = React.memo(() => {
-  console.log("glasses");
   const { glassSize, glassNumber } = useRecoilValue(unitState);
   const geometry = useMemo(
     () => new THREE.BoxGeometry(glassSize, 0.1, glassSize),

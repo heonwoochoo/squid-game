@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber";
-import React, { Suspense, useEffect, useRef } from "react";
-import { Debug, Physics, Triplet } from "@react-three/cannon";
+import { Suspense, useEffect, useRef } from "react";
+import { Physics, Triplet } from "@react-three/cannon";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Setting from "./components/Setting";
 import Floor from "./components/Floor";
@@ -15,7 +15,6 @@ import Board from "./components/Board";
 import Wall from "./components/Wall";
 import Dollars from "./components/Dollars";
 import DollarCase from "./components/DollarCase";
-import * as THREE from "three";
 import Loader from "./ui/Loader";
 import Retry from "./ui/Retry";
 import { PointerLockControls as PointerLockControlsImpl } from "three-stdlib";

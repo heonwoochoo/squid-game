@@ -1,13 +1,7 @@
 import * as THREE from "three";
 
 import { useRecoilState, useRecoilValue } from "recoil";
-import React, {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  useCallback,
-} from "react";
+import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { useSphere } from "@react-three/cannon";
 import { useFrame, MeshProps, useThree, Vector3 } from "@react-three/fiber";
 import {

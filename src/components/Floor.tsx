@@ -3,7 +3,7 @@ import { useBox } from "@react-three/cannon";
 import React, { useRef } from "react";
 import { useTexture } from "@react-three/drei";
 const Floor = React.memo(() => {
-  const [ref, api] = useBox(
+  const [ref] = useBox(
     () => ({
       args: [150, 1, 150],
       type: "Static",

@@ -48,12 +48,10 @@ function Retry() {
   const [isDead, setIsDead] = useRecoilState(deadState);
   const [respawnCount, setRespawnCount] = useRecoilState(respawnCountState);
   const clickRetry = () => {
-    console.log("Respawn");
     setIsDead(false);
     setRespawnCount((prev) => prev + 1);
   };
   const clickExit = () => {
-    console.log("Exit");
     window.close();
   };
   return (
