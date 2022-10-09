@@ -53,20 +53,22 @@
 
 ## 🕸️ Project Structure
 
-📦public
-┣ 📂assets
-┣ 📜index.html
-📦src
-┣ 📂components
-┣ 📂ui
-┣ 📂utils
-┣ 📜App.tsx
-┣ 📜atoms.ts
-┣ 📜index.tsx
+📦public  
+┣ 📂assets  
+┣ 📜index.html  
+📦src  
+┣ 📂[components](./src/components/)  
+┣ 📂[ui](./src/ui/)  
+┣ 📂[utils](./src/utils/)  
+┣ 📜[App.tsx](./src/App.tsx)  
+┣ 📜[atoms.ts](./src/atoms.ts)  
+┣ 📜[index.tsx](./src/index.tsx)
 
 - components folder: scene에서 뼈대가 되는 주요 3D Object들이 있습니다. (light, mesh, gltf-model, ...)
 - UI folder: scene에 객체로 들어가지 않는 화면에 평면상으로 나타나는 HTML Element UI로 구성되어 있습니다. (로딩 화면, 재시작 버튼, 음소거 아이콘)
-- utils folder: 컴포넌트에서 자주 호출되는 함수를 모듈로 분리했습니다.
+- utils folder: 컴포넌트에서 자주 호출되는 함수를 모듈로 분리했습니다. (키보드 컨트롤, 효과음 재생)
+
+</br>
 
 ## 🚀 Basic Explanation
 
