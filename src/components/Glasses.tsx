@@ -3,11 +3,9 @@ import { useBox } from "@react-three/cannon";
 import React, { useRef, useMemo } from "react";
 import { useRecoilValue } from "recoil";
 import { unitState } from "../atoms";
-
 interface IMesh {
   userData: { [key: string]: any };
 }
-
 const Glasses = React.memo(() => {
   const { glassSize, glassNumber } = useRecoilValue(unitState);
   const geometry = useMemo(
@@ -36,7 +34,6 @@ const Glasses = React.memo(() => {
       }),
     []
   );
-
   const glassesData = useMemo<IMesh[]>(() => {
     const arr = [];
     for (let i = 0; i < glassNumber; i++) {
@@ -48,7 +45,6 @@ const Glasses = React.memo(() => {
           pos: [-2.5, 10.5, i * glassSize * 2 - glassSize * 10],
         },
       };
-
       const glassLeft: IMesh = {
         userData: {
           type: pattern === 0 ? "strong" : "normal",

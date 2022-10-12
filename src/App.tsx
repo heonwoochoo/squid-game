@@ -30,14 +30,12 @@ export interface IGlass {
 }
 backgroungMusic.stop();
 backgroungMusic.play();
-
 function App() {
   const [isLock, setIsLock] = useRecoilState(pointerLockState);
   const isClear = useRecoilValue(clearState);
   const isDead = useRecoilValue(deadState);
   const pointer = useRef<PointerLockControlsImpl>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
-
   useEffect(() => {
     if (pointer.current)
       isDead ? pointer.current.unlock() : pointer.current.lock();
@@ -48,7 +46,6 @@ function App() {
   const handlePointerLock = () => {
     setIsLock(false);
   };
-
   return (
     <div style={{ width: "100%", height: "100%" }}>
       <Canvas

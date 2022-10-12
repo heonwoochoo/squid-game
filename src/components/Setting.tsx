@@ -3,7 +3,6 @@ import { useEffect, useRef } from "react";
 import { useRecoilValue } from "recoil";
 import * as THREE from "three";
 import { deadState } from "../atoms";
-
 function Setting() {
   const isDead = useRecoilValue(deadState);
   const { gl, scene } = useThree();
@@ -15,7 +14,6 @@ function Setting() {
     [spotLightDistance, spotLightDistance, -spotLightDistance],
   ];
   const ref = useRef<THREE.Group>(null);
-
   useEffect(() => {
     // WebGLRenderer
     gl.setSize(window.innerWidth, window.innerHeight);
@@ -24,7 +22,6 @@ function Setting() {
     console.log(gl.info);
     // Scene
     scene.background = new THREE.Color("rgb(95, 32, 16)");
-
     // Light
     ref.current?.children.forEach((light) => {
       light.lookAt(0, 0, 0);
@@ -35,7 +32,6 @@ function Setting() {
       });
     }
   }, [isDead]);
-
   useFrame(() => {
     if (isDead) {
       ref.current?.children.forEach((light: any) => {
@@ -43,7 +39,6 @@ function Setting() {
       });
     }
   });
-
   return (
     <group ref={ref}>
       {spotLightPosition.map((position, i) => (
@@ -59,5 +54,4 @@ function Setting() {
     </group>
   );
 }
-
 export default Setting;

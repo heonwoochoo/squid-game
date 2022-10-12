@@ -1,5 +1,4 @@
 import * as THREE from "three";
-
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { useSphere } from "@react-three/cannon";
@@ -27,7 +26,6 @@ import {
   finishClap,
   jumpSound,
 } from "../utils/sounds";
-
 const Player = (props: MeshProps) => {
   const [isClear, setIsClear] = useRecoilState(clearState);
   const [jumping, setJumping] = useState(false);
@@ -37,7 +35,6 @@ const Player = (props: MeshProps) => {
   const [clearTime, setClearTime] = useRecoilState(clearTimeState);
   const respawnCount = useRecoilValue(respawnCountState);
   const { camera } = useThree();
-
   const handleCollide = useCallback((e: any) => {
     const type = e.body.userData?.glassType;
     const step = e.body.userData?.step;
@@ -47,7 +44,6 @@ const Player = (props: MeshProps) => {
       e.contact.contactPoint[1],
       e.contact.contactPoint[2],
     ];
-
     // 바닥에 착지 -> 사망
     if (e.body.userData?.name === "floor") {
       deathScream.play();
