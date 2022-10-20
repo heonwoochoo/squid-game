@@ -1,11 +1,8 @@
 # Netflix 오징어게임 - 징검다리 건너기
 
-<img src="https://img.shields.io/badge/react-
-61DAFB?style=for-the-badge&logo=react&logoColor=black">
-<img src="https://img.shields.io/badge/TypeScript-
-3178C6?style=for-the-badge&logo=TypeScript&logoColor=black">
-<img src="https://img.shields.io/badge/Three.js-
-000000?style=for-the-badge&logo=Three.js&logoColor=white">
+![image](https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![image](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=black)
+![image](https://img.shields.io/badge/Three.js-000000?style=for-the-badge&logo=Three.js&logoColor=white)
 
 ## Table of contents
 
